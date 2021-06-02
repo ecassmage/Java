@@ -1,0 +1,55 @@
+Script started on 2021-05-23 10:56:59-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat Lab1.java
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
+public class Lab1 {
+        public static void main(String[] args) {
+                Activity1();
+                Activity2();
+        }
+        public static void Activity1(){
+                String name = JOptionPane.showInputDialog("What is your name?");
+                System.out.println("\"Hello, " + name + "!\"");
+        }
+        public static void Activity2(){
+                ArrayList<String> ThreeNames = new ArrayList<String>(); // I could just print 1 after the other only using string but I like this more.
+                for (int nameCount = 1; nameCount <= 3; nameCount++) {
+                        ThreeNames.add(JOptionPane.showInputDialog("What is friend number " + nameCount + "'s name?"));
+                }
+                printNames(ThreeNames);
+        }
+        public static void printNames (ArrayList<String> list){
+                for (int position = 0; position < list.toArray().length; position++){
+                        System.out.println((position + 1) + "\t" + list.get(position));
+                }
+        }
+}
+sh-4.4$ javac Lab1.java
+[25l[H        public static void Activity1(){[K
+                String name = JOptionPane.showInputDialog("What is your name?");[K
+                System.out.println("\"Hello, " + name + "!\"");[K
+        }[K
+        public static void Activity2(){[K
+                ArrayList<String> ThreeNames = new ArrayList<String>(); // I could just print 1 after the other only using string but I like this more.[K
+                for (int nameCount = 1; nameCount <= 3; nameCount++) {[K
+                        ThreeNames.add(JOptionPane.showInputDialog("What is friend number " + nameCount + "'s name?"));[K
+                }[K
+                printNames(ThreeNames);[K
+        }[K
+        public static void printNames (ArrayList<String> list){[K
+                for (int position = 0; position < list.toArray().length; position++){[K
+                        System.out.println((position + 1) + "\t" + list.get(position));[K
+                }[K
+        }[K
+}[K
+sh-4.4$ javac Lab1.java[K
+[K[?25hsh-4.4$ java Lab1
+"Hello, Evan!"
+1       Evan
+2       Morrison
+3       Connor
+sh-4.4$ exit
+exit
+
+Script done on 2021-05-23 10:57:43-04:00 [COMMAND_EXIT_CODE="0"]

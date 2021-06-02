@@ -1,0 +1,114 @@
+Script started on 2021-05-30 14:47:47-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat Book.java
+public class Book {
+    private String Name;
+    private String Author;
+    private int YearOfPublication;
+    private int NumberOfPages;
+    public static void main(String[] args){
+
+    }
+
+    public Book(String name){
+        this.Name = name;
+    }
+    public Book(String name, String author){
+        this.Name = name;
+        this.Author = author;
+    }
+
+    public void setName(String newName){
+        Name = newName;
+    }
+    public void setAuthor(String newAuthor){
+        Author = newAuthor;
+    }
+    public void setYearOfPublication(int year){
+        YearOfPublication = year;
+    }
+    public void setNumberOfPages(int pages){
+        NumberOfPages = pages;
+    }
+
+    public String getName(){
+        return Name;
+    }
+    public String getAuthor(){
+        return Author;
+    }
+    public int getYearOfPublication(){
+        return YearOfPublication;
+    }
+    public int getNumberOfPages(){
+        return NumberOfPages;
+    }
+}
+sh-4.4$ cat TestBook.java
+public class TestBook {
+    // Testoritoes is a better name
+
+    public static void main(String[] args){
+        Book Book1 = new Book("Book of Lies", "Evan Morrison");
+        Book Book2 = new Book("Book inside BlackHoles");
+        setBook(Book1);
+        System.out.println();
+        setBook(Book2);
+    }
+    public static void setBook(Book book){
+        getAllInfo(book);
+        book.setNumberOfPages(500);
+        getAllInfo(book);
+        book.setYearOfPublication(2001);
+        getAllInfo(book);
+        book.setYearOfPublication(2002);
+        getAllInfo(book);
+        book.setName("New Book Title");
+        getAllInfo(book);
+        book.setAuthor("Evan Morrison");
+        getAllInfo(book);
+        book.setAuthor("Evan The Not Morrison");
+        getAllInfo(book);
+    }
+    public static void getAllInfo(Book book){
+        System.out.println("Name: " + book.getName() + ", Author: " + book.getAuthor() + ", Year of Publication: " + book.getYearOfPublication() + ", Number of Pages: " + book.getNumberOfPages());
+    }
+}
+sh-4.4$ javac Book.java TestBook.java
+[25l[H        book.setNumberOfPages(500);[K
+        getAllInfo(book);[K
+        book.setYearOfPublication(2001);[K
+        getAllInfo(book);[K
+        book.setYearOfPublication(2002);[K
+        getAllInfo(book);[K
+        book.setName("New Book Title");[K
+        getAllInfo(book);[K
+        book.setAuthor("Evan Morrison");[K
+        getAllInfo(book);[K
+        book.setAuthor("Evan The Not Morrison");[K
+        getAllInfo(book);[K
+    }[K
+    public static void getAllInfo(Book book){[K
+        System.out.println("Name: " + book.getName() + ", Author: " + book.getAuthor() + ", Year of Publication: " + book.getYearOfPublication() + ", Number of Pages: " + book.getNumberOfPages());[K
+    }[K
+}[K
+sh-4.4$ javac Book.java TestBook.java[K
+[K[?25hsh-4.4$ java TestBook
+Name: Book of Lies, Author: Evan Morrison, Year of Publication: 0, Number of Pages: 0
+Name: Book of Lies, Author: Evan Morrison, Year of Publication: 0, Number of Pages: 500
+Name: Book of Lies, Author: Evan Morrison, Year of Publication: 2001, Number of Pages: 500
+Name: Book of Lies, Author: Evan Morrison, Year of Publication: 2002, Number of Pages: 500
+Name: New Book Title, Author: Evan Morrison, Year of Publication: 2002, Number of Pages: 500
+Name: New Book Title, Author: Evan Morrison, Year of Publication: 2002, Number of Pages: 500
+Name: New Book Title, Author: Evan The Not Morrison, Year of Publication: 2002, Number of Pages: 500
+
+Name: Book inside BlackHoles, Author: null, Year of Publication: 0, Number of Pages: 0
+Name: Book inside BlackHoles, Author: null, Year of Publication: 0, Number of Pages: 500
+Name: Book inside BlackHoles, Author: null, Year of Publication: 2001, Number of Pages: 500
+Name: Book inside BlackHoles, Author: null, Year of Publication: 2002, Number of Pages: 500
+Name: New Book Title, Author: null, Year of Publication: 2002, Number of Pages: 500
+Name: New Book Title, Author: Evan Morrison, Year of Publication: 2002, Number of Pages: 500
+Name: New Book Title, Author: Evan The Not Morrison, Year of Publication: 2002, Number of Pages: 500
+sh-4.4$ exit
+exit
+
+Script done on 2021-05-30 14:48:21-04:00 [COMMAND_EXIT_CODE="0"]

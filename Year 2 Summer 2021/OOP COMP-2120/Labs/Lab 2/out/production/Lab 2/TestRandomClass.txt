@@ -1,0 +1,97 @@
+Script started on 2021-05-30 14:47:09-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat TestRandomClass.java
+import java.util.Random;
+
+public class TestRandomClass {
+    private Random ThisIsDefinitelyRandom = new Random();
+    public static void main(String[] args){
+        TestRandomClass test = new TestRandomClass();
+        for (int i = 0; i < 5; i++){System.out.println(test.randomInt());}
+        System.out.println();
+        for (int i = 0; i < 5; i++){System.out.println(test.randomDouble());}
+        System.out.println();
+        for (int i = 0; i < 5; i++){System.out.println(test.randomInt(10, 20+1));}
+        System.out.println();
+        for (int i = 0; i < 5; i++){System.out.println(test.randomEvenInts(10, 100+1));}
+        System.out.println();
+        for (int i = 0; i < 5; i++){System.out.println(test.flipCoinString());}
+        System.out.println();
+    }
+    public int randomInt(int lowerBound, int upperBound){
+        return ThisIsDefinitelyRandom.nextInt(upperBound - lowerBound) + lowerBound;
+    }
+    public int randomInt(){
+        return ThisIsDefinitelyRandom.nextInt();
+    }
+    public double randomDouble(int lowerBound, int upperBound){
+        return ThisIsDefinitelyRandom.nextDouble() + randomInt(lowerBound, upperBound-1);
+    }
+    public double randomDouble(){
+        return ThisIsDefinitelyRandom.nextDouble();
+    }
+    public int randomEvenInts(int lowerBound, int upperBound){
+        if (upperBound % 2 == 1) upperBound += 1;
+        return (ThisIsDefinitelyRandom.nextInt((upperBound - lowerBound) / 2) * 2) + lowerBound;
+    }
+    public String flipCoinString(){
+        if (ThisIsDefinitelyRandom.nextBoolean()) return "Head";
+        else return "Tail";
+    }
+    public int flipCoinInt(){
+        return ThisIsDefinitelyRandom.nextBoolean() ?1:0;
+    }
+}
+sh-4.4$ javac TestRandomClass.java
+[25l[H        return ThisIsDefinitelyRandom.nextDouble() + randomInt(lowerBound, upperBound-1);[K
+    }[K
+    public double randomDouble(){[K
+        return ThisIsDefinitelyRandom.nextDouble();[K
+    }[K
+    public int randomEvenInts(int lowerBound, int upperBound){[K
+        if (upperBound % 2 == 1) upperBound += 1;[K
+        return (ThisIsDefinitelyRandom.nextInt((upperBound - lowerBound) / 2) * 2) + lowerBound;[K
+    }[K
+    public String flipCoinString(){[K
+        if (ThisIsDefinitelyRandom.nextBoolean()) return "Head";[K
+        else return "Tail";[K
+    }[K
+    public int flipCoinInt(){[K
+        return ThisIsDefinitelyRandom.nextBoolean() ?1:0;[K
+    }[K
+}[K
+sh-4.4$ javac TestRandomClass.java[K
+[K[?25hsh-4.4$ java TestRandomClass
+1066301163
+364808733
+1782943262
+-520864012
+-893122471
+
+0.870192811531215
+0.8225517389343246
+0.19626744639086435
+0.5439991701571979
+0.7845893945958402
+
+14
+15
+15
+17
+18
+
+32
+72
+68
+72
+92
+
+Tail
+Head
+Head
+Tail
+Tail
+
+sh-4.4$ exit
+exit
+
+Script done on 2021-05-30 14:47:33-04:00 [COMMAND_EXIT_CODE="0"]
