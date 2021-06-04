@@ -106,6 +106,7 @@ public class Person {
     public void setName(String name){Name = name.split(" ");}
     public void setName(String firstName, String lastName){Name = new String[]{firstName, lastName};}
     public void setCellFormat(String newFormat){ CellFormat = newFormat; }
+    public void setCellFormat(String newFormat, String newNumber){ CellFormat = newFormat; setCellNumber(newNumber);}
     public void setCellNumber(String Number){ CellNumber = formatCellPhone(Number, CellFormat); }
     public void setBirthMonth(int Month){BirthDate[0] = Month;}
     public void setBirthDay(int Day){BirthDate[1] = Day;}
@@ -117,7 +118,18 @@ public class Person {
     public String getName(){return getFirstName() + " " + getLastName();}
     public String getCellFormat(){return CellFormat;}
     public String getCellNumber(){return CellNumber;}
+    public String getCellNumberJustNumbers(){
+        String Number = CellNumber;
+        for (int i = 0; i < Number.length(); i++) {
+            if (!Character.isDigit(Number.charAt(i))){
+                Number = Number.replace(Character.toString(Number.charAt(i)), "");
+                i--;
+            }
+        }
+        return Number;
+    }
     public int getBirthMonth(){return BirthDate[0];}
     public int getBirthDay(){return BirthDate[1];}
     //Getters
 }
+

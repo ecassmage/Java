@@ -1,4 +1,5 @@
 import java.lang.reflect.*;
+import java.util.Arrays;
 
 public class FriendsList {
     private Person[] FriendsList;
@@ -66,6 +67,7 @@ public class FriendsList {
         }
         FriendsList[Len-1] = person;
     }
+    public void addListOfFriends(Person[] people){ for (Person person: people) addFriend(person); }
 
     public void deleteFriend(Person person){
         Len--;
@@ -77,18 +79,19 @@ public class FriendsList {
             FriendsList[i++] = personInQuestion;
         }
     }
+    public void deletePeopleWithNames(String name){
+        for (Person person: FriendsList){
+            if (person.getFirstName().equals(name)) deleteFriend(person);
+        }
+    }
+
     public void modifyFriendName(Person person, String newName){ person.setName(newName); }
     public void modifyFriendName(Person person, String newFName, String newLName){ person.setName(newFName + " " + newLName); }
     public void modifyFriendFirstName(Person person, String newFName){ person.setName(newFName + " " + person.getLastName()); }
     public void modifyFriendLastName(Person person, String newLName){ person.setName(person.getFirstName() + " " + newLName); }
-    public void modifyFriendPhoneNumber(Person person, String newLName){ person.setName(person.getFirstName() + " " + newLName); }
-    public void modifyFriend(Person person, Person replaceThisBadPerson){
-        replaceThisBadPerson.setName(person.getName());
-        replaceThisBadPerson.setCellFormat(person.getCellFormat());
-        replaceThisBadPerson.setCellNumber(person.getCellNumber());
-        replaceThisBadPerson.setBirthMonth(person.getBirthMonth());
-        replaceThisBadPerson.setBirthDay(person.getBirthDay());
-    }
+    public void modifyFriendPhoneNumber(Person person, String newNumber){ person.setCellNumber(newNumber); }
+    public void modifyFriend(Person person, String newFName, String newLName, String newNumber, int newBirthMonth, int newBirthDay) { modifyFriend(person, new Person(newFName, newLName, newNumber, newBirthMonth, newBirthDay)); }
+    public void modifyFriend(Person person, String newFName, String newLName, String newNumber, int newBirthMonth, int newBirthDay, String newFormat) { modifyFriend(person, new Person(newFName, newLName, newNumber, newBirthMonth, newBirthDay, newFormat)); }
 
     public void printSortedListOfPersons(String formatType) {
         int number = controlBoard(formatType);
@@ -98,7 +101,7 @@ public class FriendsList {
     }
 
         //sorting FriendsList
-    public Person[] sort(String formatString){return PersonsSortedStrings(FriendsList.clone(), controlBoard(formatString));}
+    public static Person[] sort(Person[] list, String formatString){return PersonsSortedStrings(list.clone(), controlBoard(formatString));}
     public Person[] lastNamesSorted(){return PersonsSortedStrings(FriendsList.clone(), 1);} // Yay just love being able to do things like this. Missed this in C. Python Spoiled me.
     public Person[] firstNamesSorted(){return PersonsSortedStrings(FriendsList.clone(), 2);} // Yay just love being able to do things like this. Missed this in C. Python Spoiled me.
     public Person[] cellPhoneSorted(){return PersonsSortedStrings(FriendsList.clone(), 3);} // Yay just love being able to do things like this. Missed this in C. Python Spoiled me.
@@ -138,18 +141,37 @@ public class FriendsList {
     public Person[] getSortedByDayBornInMonth(String month){ return getListByMonth(month); }
     public Person[] getSortedByLastNamesWithDay(int day){ return getListByDay(day); }
             // Required Methods
-        //Getters
+            //GetPerson
+    public Person getPerson(String fName, String lName){return getPerson(new String[]{fName, lName}, null, 0, 0, false)[0];}
+    public Person getPerson(String Number){return getPerson(new String[]{null, null}, Number, 0, 0, false)[0];}
+    public Person getPerson(int bMonth, int bDay){ return getPerson(new String[]{null, null}, null, bMonth, bDay, false)[0]; }
+            //GetPerson
+            //GetPeople
+    public Person[] getPeople(String fName, String lName){return getPerson(new String[]{fName, lName}, null, 0, 0, true);}
+    public Person[] getPeople(String Number){return getPerson(new String[]{null, null}, Number, 0, 0, true);}
+    public Person[] getPeople(int bMonth, int bDay){ return getPerson(new String[]{null, null}, null, bMonth, bDay, true); }
+            //GetPeople
+    //Getters
+
     // Public Stuff
 
 
     // Private Stuff
 
-    private void switchPositions(Person[] list, int person1, int person2){
+    private void modifyFriend(Person person, Person replaceThisBadPerson){
+        person.setName(replaceThisBadPerson.getName());
+        person.setCellFormat(replaceThisBadPerson.getCellFormat());
+        person.setCellNumber(replaceThisBadPerson.getCellNumber());
+        person.setBirthMonth(replaceThisBadPerson.getBirthMonth());
+        person.setBirthDay(replaceThisBadPerson.getBirthDay());
+    }
+
+    private static void switchPositions(Person[] list, int person1, int person2){
         Person temp = list[person1];
         list[person1] = list[person2];
         list[person2] = temp;
     }
-    private boolean matchWords(String person1, String person2){
+    private static boolean matchWords(String person1, String person2){
         //forElseLoop:{  // Yay a Sort of Python For Else loop want to remember this for some other project even though it is useless now that it is now in a separate function
             for (int w1 = 0; w1 < person2.length() && w1 < person1.length(); w1++){
                 if (person1.charAt(w1) < person2.charAt(w1))
@@ -165,40 +187,44 @@ public class FriendsList {
         //}
     }
 
-    private Person[] PersonsSortedStrings(Person[] lastNameList, int code){
-        if (code == 0) return lastNameList;
-        for (int i = 1; i < lastNameList.length; i++) for (int j = 0; j < lastNameList.length-i; j++) {
+    private static Person[] PersonsSortedStrings(Person[] list, int code){
+        if (code == 0) return list;
+        for (int i = 1; i < list.length; i++) for (int j = 0; j < list.length-i; j++) {
             String person1 = "";
             String person2 = "";
             switch(code){
                 case 1:
-                    person1 = lastNameList[j].getLastName();
-                    person2 = lastNameList[j + 1].getLastName();
+                    person1 = list[j].getLastName();
+                    person2 = list[j + 1].getLastName();
                     break;
                 case 2:
-                    person1 = lastNameList[j].getFirstName();
-                    person2 = lastNameList[j + 1].getFirstName();
+                    person1 = list[j].getFirstName();
+                    person2 = list[j + 1].getFirstName();
                     break;
                 case 3:
-                    person1 = lastNameList[j].getCellNumber();
-                    person2 = lastNameList[j + 1].getCellNumber();
+                    person1 = list[j].getCellNumber();
+                    person2 = list[j + 1].getCellNumber();
                     break;
                 case 4:
-                    if (PersonsSortedInt(lastNameList[j].getBirthMonth(), lastNameList[j + 1].getBirthMonth())) switchPositions(lastNameList, j, j + 1);
+                    boolean truck = (PersonsSortedInt(list[j].getBirthMonth(), list[j + 1].getBirthMonth()));
+                    int one = list[j].getBirthMonth();
+                    int two = list[j+1].getBirthMonth();
+                    if (PersonsSortedInt(list[j].getBirthMonth(), list[j + 1].getBirthMonth())) switchPositions(list, j, j + 1);
                     continue;
                 case 5:
-                    if (PersonsSortedInt(lastNameList[j].getBirthDay(), lastNameList[j + 1].getBirthDay())) switchPositions(lastNameList, j, j + 1);
+                    if (PersonsSortedInt(list[j].getBirthDay(), list[j + 1].getBirthDay())) switchPositions(list, j, j + 1);
                     continue;
             }
             if (person1 == null) continue;
             if (person2 == null || matchWords(person1, person2))
-                switchPositions(lastNameList, j, j + 1);
+                switchPositions(list, j, j + 1);
         }
-        return lastNameList;
+        return list;
     }
-    private boolean PersonsSortedInt(int person1, int person2){
+    private static boolean PersonsSortedInt(int person1, int person2){
         return !(person1 == 0) && (person2 == 0 || person1 > person2);
     }
+
     private Person[] getListByMonth(Person[] list, String month, boolean sortByDay){ // Inner use to call more controllable
         String[] arr = {"january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"};
         month = month.toLowerCase();
@@ -208,6 +234,7 @@ public class FriendsList {
         System.out.println(month + " is not a Real Month");
         return null;
     }
+    // You Might be wondering why I have sortByDay here when it is always true and that is because I like to have the ability to change things easily.
     private Person[] getListByMonth(Person[] list, int month, boolean sortByDay){ // Inner use to call more controllable
 
         Person[] listOfMonth = new Person[list.length];
@@ -220,7 +247,7 @@ public class FriendsList {
 
         for (int i = 0; i < p; i++) list[i] = listOfMonth[i]; // To get rid of any empty Cells.
 
-        if (sortByDay) return PersonsSortedStrings(list, 4);
+        if (sortByDay) return PersonsSortedStrings(list, 5); // code: 5 is "BirthDay";
         return list;
     }
 
@@ -250,14 +277,14 @@ public class FriendsList {
 //    }
 
 
-    private static int controlBoard(String formatType){
+    public static int controlBoard(String formatType){
         switch(formatType){
-            case "LastName":        return 1;
-            case "FirstName":       return 2;
-            case "CellPhone":       return 3;
-            case "BirthMonth":      return 4;
-            case "BirthDay":        return 5;
-            default: case "Name":   return 0;
+            case "LastName", "LastNames":        return 1;
+            case "FirstName", "FirstNames":       return 2;
+            case "CellPhone", "CellPhones":       return 3;
+            case "BirthMonth", "BirthMonths":      return 4;
+            case "BirthDay", "BirthDays":        return 5;
+            case "Name", "Names": default:   return 0;
         }
     }
 
@@ -306,5 +333,33 @@ public class FriendsList {
             System.out.println("ERROR: " + NoSuchMethodException.toString());
             System.exit(0);
         }
+    }
+
+    private Person[] getPerson(String[] Name, String Number, int bMonth, int bDay, boolean listOrNot){
+        Person[] listOfPeople = null;
+        for (Person person : FriendsList) {
+            if (Name[0] != null && !(person.getFirstName().equals(Name[0])))
+                continue;
+            if (Name[1] != null && !(person.getLastName().equals(Name[1])))
+                continue;
+            if (Number != null && !((person.getCellNumber().equals(Number) && (person.getCellNumberJustNumbers().equals(Number)))))
+                continue;
+            if (bMonth != 0 && !(person.getBirthMonth() == bMonth))
+                continue;
+            if (bDay != 0 && !(person.getBirthDay() == bDay))
+                continue;
+            if (listOrNot) {
+                if (listOfPeople == null) listOfPeople = new Person[]{person};
+                else listOfPeople = Arrays.copyOf(listOfPeople, listOfPeople.length+1);
+                listOfPeople[listOfPeople.length - 1] = person;
+            }
+            else return new Person[]{person};
+        }
+        if (listOfPeople == null) listOfPeople = new Person[]{null};
+        return listOfPeople;
+    }
+    public void printPerson(Person person){
+        if (person == null) return;
+        person.PrintPerson();
     }
 }
