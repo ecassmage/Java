@@ -1,7 +1,8 @@
 public class Person {
-    private String[] Name;
+
+    private String[] Name = {null, null};
     private String CellNumber;
-    private int[] BirthDate;
+    private int[] BirthDate = {0, 0};
     private String CellFormat = "1 XXX XXX-XXXX"; // Default 1 XXX XXX-XXXX;  Unless the digit is defined to only be that digit an X needs to be placed in the position
 
     public static void main(String[] args){
