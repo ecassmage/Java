@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Manager extends Employee{
+public class Manager extends Employee {
     private double BonusMonthly;
     private Employee[] Employees;
     public Manager(String name, String Phone, int bMonth, int bDay, int hiringYear, double salary, int vacationDays, int unusedVacationDays, double bonusMonthly) {this(name, Phone, bMonth, bDay, hiringYear, salary, vacationDays, unusedVacationDays, bonusMonthly, null);}

@@ -4,7 +4,7 @@ public class Company {
     private String Name;
     private int StartingYear;
 
-    private Employee[] Employees;
+    private Employee[] Employees;  // Also Contains Managers as a Manager is also an employee so it wouldn't make sense to not include them here as well. I would not recommend using them through here though as you lose access to Manager specific methods.
     private Manager[] Managers;
 
     public Company(){this(null, 0);}
