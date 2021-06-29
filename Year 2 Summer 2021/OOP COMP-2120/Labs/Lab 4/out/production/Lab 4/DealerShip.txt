@@ -1,0 +1,381 @@
+Script started on 2021-06-12 17:44:29-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat Car
+cat: Car: No such file or directory
+sh-4.4$ cat Car.java
+public class Car {
+    private String[] CarInfoS; // = {Make, Model, Transmission, Type};
+    private int[] CarInfoI; // = {year, Gas Tank Size, seats, Maximum Speed, Wheels};
+    private double[] CarInfoD; // = {Price, FuelEfficiency};
+    public static void main(String[] args){
+        //Glargs
+    }
+
+    public Car(String[] Str, int[] Int, double[] Double){
+        if (Str != null)    CarInfoS = Str;
+        else CarInfoS = new String[]{null, null, null, null};
+        if (Int != null)    CarInfoI = Int;
+        else CarInfoI = new int[]{0, 0, 0, 0, 0};
+        if (Double != null) CarInfoD = Double;
+        else CarInfoD = new double[]{0, 0};
+    }
+    public Car(String make, String model, String transmission, String type){
+        this(new String[]{make, model, transmission, type}, null, null);
+    }
+    public Car(int year, int gas, int seats, int speed, int wheels){
+        this(null, new int[]{year, gas, seats, speed, wheels}, null);
+    }
+    public Car(double price, double fuel){
+        this(null, null, new double[]{price, fuel});
+    }
+    public Car(){
+        this(null, null, null);
+    }
+
+    public String getMake(){return CarInfoS[0];}
+    public String getModel(){return CarInfoS[1];}
+    public String getTransmission(){return CarInfoS[2];}
+    public String getType(){return CarInfoS[3];}
+    public int getYear(){return CarInfoI[0];}
+    public int getGasTankSize(){return CarInfoI[1];}
+    public int getSeats(){return CarInfoI[2];}
+    public int getMaxSpeed(){return CarInfoI[3];}
+    public int getWheels(){return CarInfoI[4];}
+    public double getPrice(){return CarInfoD[0];}
+    public double getFuelEfficiency(){return CarInfoD[1];}
+
+    public void setMake(String str){CarInfoS[0] = str;}
+    public void setModel(String str){CarInfoS[1] = str;}
+    public void setTransmission(String str){CarInfoS[2] = str;}
+    public void setType(String str){CarInfoS[3] = str;}
+    public void setYear(int Int){CarInfoI[0] = Int;}
+    public void setGasTankSize(int Int){CarInfoI[1] = Int;}
+    public void setSeats(int Int){ CarInfoI[2] = Int;}
+    public void setMaxSpeed(int Int){ CarInfoI[3] = Int;}
+    public void setWheels(int Int){ CarInfoI[4] = Int;}
+    public void setPrice(double Double){ CarInfoD[0] = Double;}
+    public void setFuelEfficiency(double Double){ CarInfoD[1] = Double;}
+}
+sh-4.4$ cvat   at Dealership./ java
+
+public class Dealership {
+    //I Am Bored
+    private String[] DealerShipInformation;
+    private Car[] Cars;
+    private String[] Employees;
+    private String[] Managers;
+    public static void main(String[] args){
+        //Blargs
+    }
+
+    public Dealership(String name, String location, String[] ListOfEmployees, String[] ListOfManagers, Car[] ListOfCars){
+        this.DealerShipInformation = new String[]{name, location};
+        this.Cars = ListOfCars;
+        this.Employees = ListOfEmployees;
+        this.Managers = ListOfManagers;
+    }
+    public Dealership(Car car){
+        this(null, null, new String[0], new String[0], new Car[]{car});
+    }
+
+    public void addEmployee(String Name){
+        String[] list = Employees.clone();
+        Employees = new String[Employees.length + 1];
+        for (int i = 0; i < list.length; i++) Employees[i] = list[i]; // Meh I am too tired to use ArrayList and It never told me I had to.
+        Employees[Employees.length-1] = Name;
+    }
+
+    public void addManager(String Name){
+        String[] list = Managers.clone();
+        Managers = new String[Managers.length + 1];
+        for (int i = 0; i < list.length; i++) Managers[i] = list[i];
+        Managers[Managers.length-1] = Name;
+    }
+    public void addCar(Car car){
+        Car[] list = Cars.clone();
+        Cars = new Car[Cars.length + 1];
+        for (int i = 0; i < list.length; i++) Cars[i] = list[i];
+        Cars[Cars.length-1] = car;
+    }
+
+    public void deleteEmployee(String name){
+        ForElse:{
+            for (String Name: Employees) if (Name.equals(name)) break ForElse;
+            return;
+        }
+        String[] list = Employees;
+        Employees = new String[list.length-1];
+        int j = 0;
+        for (int i = 0; i < list.length; i++){
+            if (!list[i].equals(name)){
+                Employees[j] = list[i];
+                j++;
+            }
+        }
+    }
+    public void deleteManager(String name){
+        ForElse:{
+            for (String Name: Managers) if (Name.equals(name)) break ForElse;
+            return;
+        }
+        String[] list = Managers;
+        Managers = new String[list.length-1];
+        int j = 0;
+
+        for (int i = 0; i < list.length; i++){
+            if (!list[i].equals(name)){
+                Managers[j] = list[i];
+                j++;
+            }
+        }
+    }
+    public void deleteCar(Car car){
+        ForElse:{
+            for (Car cars: Cars) if (cars == car) break ForElse;
+            return;
+        }
+        Car[] list = Cars;
+        Cars = new Car[list.length-1];
+        int j = 0;
+        for (int i = 0; i < list.length; i++){
+            if (list[i] != (car)){
+                Cars[j] = list[i];
+                j++;
+            }
+        }
+    }
+
+    public void setName(String name){ DealerShipInformation[0] = name; }
+    public void setLocation(String location){ DealerShipInformation[1] = location; }
+    public String getName(){ return DealerShipInformation[0]; }
+    public String getLocation(){ return DealerShipInformation[1]; }
+
+
+    public String[] getEmployees(){
+        return Employees;
+    }
+    public String[] getManagers(){
+        return Managers;
+    }
+    public Car[] getCars(){
+        return Cars;
+    }
+}
+sh-4.4$ cat Dealership.java[2@5D[1P[1P[1@T[1@e[1@s[1@t
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Random;
+import java.util.Scanner;
+
+
+public class TestDealership {
+    //The Internet is beautiful that they have lists of anything up.
+    private final String[] Makes = {"Acura","Alfa Romeo","AM General","AMC","Aston Martin","Audi","Bentley","BMW","Bricklin","Buick","Cadillac","Chevrolet","Chrysler","Daewoo","Datsun","Dodge","Eagle","Ferrari","Fiat","Ford","Geo","GMC","Honda","HUMMER","Hyundai","Infiniti","Isuzu","Jaguar","Jeep","Kia","Land Rover","Lexus","Lincoln","Lamborghini","Lotus","Maserati","Mazda","Mercedes-Benz","Mercury","MG","MINI","Mitsubishi","Nissan","Oldsmobile","Plymouth","Pontiac","Porsche","RAM","Renault","Rolls Royce","Saab","Saturn","Scion","Shelby","Smart","Subaru","Suzuki","Toyota","Triumph","Volkswagen","Volvo"};
+    private final String[] Types = {"Sedan", "Coupe", "Sports Car", "Station Wagon", "HatchBack", "Convertible", "SUV", "MiniVan", "Pickup Truck"};
+    private final String Alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final String[] words = {"Alpha", "Beta", "Jacobin", "Napoleon", "Panzer", "Tank", "Rhine", "Alsace", "Bismarck", "Yamato", "Hood", "Omega", "Verdun", "Thermopylae", "Caesar", "Bonaparte"}; // 16
+    private final Random rand = new Random();
+    private Dealership[] DS;
+    public static void print(String str){
+        System.out.println(str);
+    }
+    public static void main(String[] args){
+        TestDealership TD = new TestDealership();
+        TD.addDealership(new Dealership(TD.buildCar()));
+        TD.addDealership(new Dealership(TD.buildCar()));
+        TD.addDealership(new Dealership(TD.buildCar()));
+        TD.DS[0].setName("Cars Which Are Definitely Good");
+        TD.DS[0].setLocation("123 Not Illegal Rd");
+        TD.DS[1].setName("Competitive Cars Not Competitive Prices");
+        TD.DS[1].setLocation("7424 People Boulevard");
+        TD.DS[2].setName("Car Street Bets");
+        TD.DS[2].setLocation("2482646 Avenue");
+        TD.addCars(TD.DS[0], 10);
+        TD.addEmployees(TD.DS[0], 10);
+        TD.addManagers(TD.DS[0], 10);
+        TD.addCars(TD.DS[1], 10);
+        TD.addEmployees(TD.DS[1], 10);
+        TD.addManagers(TD.DS[1], 10);
+        TD.addCars(TD.DS[2], 1000);
+        TD.addEmployees(TD.DS[2], 100);
+        TD.addManagers(TD.DS[2], 10);
+        print(Arrays.toString(TD.DS[1].getCars()));
+        print(Arrays.toString(TD.DS[0].getEmployees()));
+        print(Arrays.toString(TD.DS[0].getManagers()));
+        print(Arrays.toString(TD.DS[1].getEmployees()));
+        print(Arrays.toString(TD.DS[1].getManagers()));
+        print(Arrays.toString(TD.DS[2].getCars()));
+        print(Arrays.toString(TD.DS[2].getEmployees()));
+        print(Arrays.toString(TD.DS[2].getManagers()));
+        Scanner scn = new Scanner(System.in);
+        System.out.print("Do You Want all Cars to Be Printing Out???: This is a lot of cars so you might not want this: ");
+        String str = scn.nextLine().toLowerCase();
+        if (str.equals("yes")){
+            printCars(TD.DS[0]);
+            printCars(TD.DS[1]);
+            printCars(TD.DS[2]);
+        }
+    }
+
+    public static void printCars(Dealership Dealer){
+        System.out.println(Dealer.getName() + " Presents at the Location: " + Dealer.getLocation() + " All of these Cars!!!!");
+        for (Car car: Dealer.getCars()){
+            System.out.println(car);
+            System.out.println("\tMake: " + car.getMake());
+            System.out.println("\tModel: " + car.getModel());
+            System.out.println("\tTransmission: " + car.getTransmission());
+            System.out.println("\tType: " + car.getType());
+            System.out.println("\tYear: " + car.getYear() + " AF");  // After Future
+            System.out.println("\tGas: " + car.getGasTankSize() + " L");
+            System.out.println("\tSeats: " + car.getSeats());
+            System.out.println("\tSpeed: " + car.getMaxSpeed() + " kmh");
+            System.out.println("\tWheels: " + car.getWheels());
+            System.out.println("\tPrice: $" + car.getPrice());
+            System.out.println("\tFuel Efficiency: " + car.getFuelEfficiency() + " l/km");
+        }
+    }
+
+    public TestDealership(){
+        this.DS = new Dealership[0];
+    }
+
+    public void addDealership(Dealership ds){
+        DS = Arrays.copyOf(DS, DS.length + 1);
+        DS[DS.length-1] = ds;
+    }
+
+    public Car buildCar(){
+        return new Car(new String[]{makeMake(), makeModel(), makeTransmission(), makeType()}, new int[]{getYear(), getGas(), getSeats(), getSpeed(), getWheels()}, new double[]{getPrice(), getFuelEfficiency()});
+    }
+    public void addCars(Dealership DS, int num){
+        for (int i = 0; i < num; i++){
+            DS.addCar(buildCar());
+        }
+    }
+    public void addEmployees(Dealership DS, int num){
+        int numero = 0;
+        int largestNumero = 0;
+        for (String name: DS.getEmployees()){
+            for (int i = 0; i < name.length(); i++){
+                if (48 <= name.charAt(i) && name.charAt(i) < 58){
+                    numero = (numero * 10) + (name.charAt(i) - 48);
+                }
+            }
+            if (numero > largestNumero) largestNumero = numero;
+        }
+        largestNumero++;
+        for (int i = 0; i < num; i++){
+            DS.addEmployee("Drone " + (i + largestNumero));
+        }
+    }
+    public void addManagers(Dealership DS, int num){
+        int numero = 0;
+        int largestNumero = 0;
+        for (String name: DS.getManagers()){
+            for (int i = 0; i < name.length(); i++){
+                if (48 <= name.charAt(i) && name.charAt(i) < 58){
+                    numero = (numero * 10) + (name.charAt(i) - 48);
+                }
+            }
+            if (numero > largestNumero) largestNumero = numero;
+        }
+        largestNumero++;
+        for (int i = 0; i < num; i++){
+            DS.addManager("ManagerDrone " + (i + largestNumero));
+        }
+    }
+    public String makeMake(){
+        return Makes[rand.nextInt(Makes.length)];
+    }
+    public String makeModel(){
+        return Character.toString(Alpha.charAt(rand.nextInt(26))) + "-" + Integer.toString(rand.nextInt(1000));
+    }
+    public String makeTransmission() {
+        return "Type " + Character.toString(Alpha.charAt(rand.nextInt(Alpha.length()))) + "-" + Integer.toString(rand.nextInt(200)) + " " + words[rand.nextInt(words.length)];
+    }
+    public String makeType(){
+        return Types[rand.nextInt(Types.length)];
+    }
+    public int getYear(){
+        return rand.nextInt(2022);
+    }
+    public int getGas(){
+        return rand.nextInt(200);
+    }
+    public int getSeats(){
+        return rand.nextInt(15) + 1;
+    }
+    public int getSpeed(){
+        return rand.nextInt(100) + 100;
+    }
+    public int getWheels(){
+        return rand.nextInt(18) + 1;
+    }
+    public double getPrice(){
+        return (double) Math.round((rand.nextDouble() + rand.nextInt(100000) + 10000) * 100) / 100;
+    }
+    public double getFuelEfficiency(){
+        return (double) Math.round((rand.nextDouble() / 4 + 0.01) * 100) / 100;
+    }
+}
+sh-4.4$ javac Car.java Dealership/ .java D TestDealerh ship/ .java
+[6n[6n[m[?25hsh-4.4$ java D TestDealership
+[6n[m[?25h[Car@3b07d329, Car@41629346, Car@404b9385, Car@6d311334, Car@682a0b20, Car@3d075dc0, Car@214c265e, Car@448139f0, Car@7cca494b, Car@7ba4f24f, Car@3b9a45b3]
+[Drone 1, Drone 2, Drone 3, Drone 4, Drone 5, Drone 6, Drone 7, Drone 8, Drone 9, Drone 10]
+[ManagerDrone 1, ManagerDrone 2, ManagerDrone 3, ManagerDrone 4, ManagerDrone 5, ManagerDrone 6, ManagerDrone 7, ManagerDrone 8, ManagerDrone 9, ManagerDrone 10]
+[Drone 1, Drone 2, Drone 3, Drone 4, Drone 5, Drone 6, Drone 7, Drone 8, Drone 9, Drone 10]
+[ManagerDrone 1, ManagerDrone 2, ManagerDrone 3, ManagerDrone 4, ManagerDrone 5, ManagerDrone 6, ManagerDrone 7, ManagerDrone 8, ManagerDrone 9, ManagerDrone 10]
+[Car@7699a589, Car@58372a00, Car@4dd8dc3, Car@6d03e736, Car@568db2f2, Car@378bf509, Car@5fd0d5ae, Car@2d98a335, Car@16b98e56, Car@7ef20235, Car@27d6c5e0, Car@4f3f5b24, Car@15aeb7ab, Car@7b23ec81, Car@6acbcfc0, Car@5f184fc6, Car@3feba861, Car@5b480cf9, Car@6f496d9f, Car@723279cf, Car@10f87f48, Car@b4c966a, Car@2f4d
+3709, Car@4e50df2e, Car@1d81eb93, Car@7291c18f, Car@34a245ab, Car@7cc355be, Car@6e8cf4c6, Car@12edcd21, Car@34c45dca, Car@52cc8049, Car@5b6f7412, Car@27973e9b, Car@312b1dae, Car@7530d0a, Car@27bc2616, Car@3941a79c, Car@506e1b77, Car@4fca772d, Car@9807454, Car@3d494fbf, Car@1ddc4ec2, Car@133314b, Car@b1bc7ed, Car@7
+cd84586, Car@30dae81, Car@1b2c6ec2, Car@4edde6e5, Car@70177ecd, Car@1e80bfe8, Car@66a29884, Car@4769b07b, Car@cc34f4d, Car@17a7cec2, Car@65b3120a, Car@6f539caf, Car@79fc0f2f, Car@50040f0c, Car@2dda6444, Car@5e9f23b4, Car@4783da3f, Car@378fd1ac, Car@49097b5d, Car@6e2c634b, Car@37a71e93, Car@7e6cbb7a, Car@7c3df479, 
+Car@7106e68e, Car@7eda2dbb, Car@6576fe71, Car@76fb509a, Car@300ffa5d, Car@1f17ae12, Car@4d405ef7, Car@6193b845, Car@2e817b38, Car@c4437c4, Car@433c675d, Car@3f91beef, Car@1a6c5a9e, Car@37bba400, Car@179d3b25, Car@254989ff, Car@5d099f62, Car@37f8bb67, Car@49c2faae, Car@20ad9418, Car@31cefde0, Car@439f5b3d, Car@1d56
+ce6a, Car@5197848c, Car@17f052a3, Car@2e0fa5d3, Car@5010be6, Car@685f4c2e, Car@7daf6ecc, Car@2e5d6d97, Car@238e0d81, Car@31221be2, Car@377dca04, Car@728938a9, Car@21b8d17c, Car@6433a2, Car@5910e440, Car@6267c3bb, Car@533ddba, Car@246b179d, Car@7a07c5b4, Car@26a1ab54, Car@3d646c37, Car@41cf53f9, Car@5a10411, Car@2e
+f1e4fa, Car@306a30c7, Car@b81eda8, Car@68de145, Car@27fa135a, Car@46f7f36a, Car@421faab1, Car@2b71fc7e, Car@5ce65a89, Car@25f38edc, Car@1a86f2f1, Car@3eb07fd3, Car@506c589e, Car@69d0a921, Car@446cdf90, Car@799f7e29, Car@4b85612c, Car@277050dc, Car@5c29bfd, Car@7aec35a, Car@67424e82, Car@42110406, Car@531d72ca, Car
+@22d8cfe0, Car@579bb367, Car@1de0aca6, Car@255316f2, Car@41906a77, Car@4b9af9a9, Car@5387f9e0, Car@6e5e91e4, Car@2cdf8d8a, Car@30946e09, Car@5cb0d902, Car@46fbb2c1, Car@1698c449, Car@5ef04b5, Car@5f4da5c3, Car@443b7951, Car@14514713, Car@69663380, Car@5b37e0d2, Car@4459eb14, Car@5a2e4553, Car@28c97a5, Car@6659c656
+, Car@6d5380c2, Car@45ff54e6, Car@2328c243, Car@bebdb06, Car@7a4f0f29, Car@45283ce2, Car@2077d4de, Car@7591083d, Car@77a567e1, Car@736e9adb, Car@6d21714c, Car@108c4c35, Car@4ccabbaa, Car@4bf558aa, Car@2d38eb89, Car@5fa7e7ff, Car@4629104a, Car@27f8302d, Car@4d76f3f8, Car@2d8e6db6, Car@23ab930d, Car@4534b60d, Car@3f
+a77460, Car@619a5dff, Car@1ed6993a, Car@7e32c033, Car@7ab2bfe1, Car@497470ed, Car@63c12fb0, Car@b1a58a3, Car@6438a396, Car@e2144e4, Car@6477463f, Car@3d71d552, Car@1cf4f579, Car@18769467, Car@46ee7fe8, Car@7506e922, Car@4ee285c6, Car@621be5d1, Car@573fd745, Car@15327b79, Car@4f2410ac, Car@722c41f4, Car@5b80350b, C
+ar@5d6f64b1, Car@32a1bec0, Car@22927a81, Car@78e03bb5, Car@5e8c92f4, Car@61e4705b, Car@50134894, Car@2957fcb0, Car@1376c05c, Car@51521cc1, Car@1b4fb997, Car@deb6432, Car@28ba21f3, Car@694f9431, Car@f2a0b8e, Car@593634ad, Car@20fa23c1, Car@3581c5f3, Car@6aa8ceb6, Car@2530c12, Car@73c6c3b2, Car@48533e64, Car@64a294a
+6, Car@7e0b37bc, Car@3b95a09c, Car@6ae40994, Car@1a93a7ca, Car@3d82c5f3, Car@2b05039f, Car@61e717c2, Car@66cd51c3, Car@4dcbadb4, Car@4e515669, Car@17d10166, Car@1b9e1916, Car@ba8a1dc, Car@4f8e5cde, Car@504bae78, Car@3b764bce, Car@759ebb3d, Car@484b61fc, Car@45fe3ee3, Car@4cdf35a9, Car@4c98385c, Car@5fcfe4b2, Car@6
+bf2d08e, Car@5eb5c224, Car@53e25b76, Car@73a8dfcc, Car@ea30797, Car@7e774085, Car@3f8f9dd6, Car@aec6354, Car@1c655221, Car@58d25a40, Car@1b701da1, Car@726f3b58, Car@442d9b6e, Car@ee7d9f1, Car@15615099, Car@1edf1c96, Car@368102c8, Car@6996db8, Car@1963006a, Car@7fbe847c, Car@41975e01, Car@c2e1f26, Car@dcf3e99, Car@
+6d9c638, Car@7dc5e7b4, Car@1ee0005, Car@75a1cd57, Car@3d012ddd, Car@6f2b958e, Car@1eb44e46, Car@6504e3b2, Car@515f550a, Car@626b2d4a, Car@5e91993f, Car@1c4af82c, Car@379619aa, Car@cac736f, Car@5e265ba4, Car@156643d4, Car@123a439b, Car@7de26db8, Car@1175e2db, Car@36aa7bc2, Car@76ccd017, Car@182decdb, Car@26f0a63f, 
+Car@4361bd48, Car@53bd815b, Car@2401f4c3, Car@7637f22, Car@4926097b, Car@762efe5d, Car@5d22bbb7, Car@41a4555e, Car@3830f1c0, Car@39ed3c8d, Car@71dac704, Car@123772c4, Car@2d363fb3, Car@7d6f77cc, Car@5aaa6d82, Car@73a28541, Car@6f75e721, Car@69222c14, Car@606d8acf, Car@782830e, Car@470e2030, Car@3fb4f649, Car@33833
+882, Car@200a570f, Car@16b3fc9e, Car@e2d56bf, Car@244038d0, Car@5680a178, Car@5fdef03a, Car@3b22cdd0, Car@1e81f4dc, Car@4d591d15, Car@65ae6ba4, Car@48cf768c, Car@59f95c5d, Car@5ccd43c2, Car@4aa8f0b4, Car@7960847b, Car@6a6824be, Car@5c8da962, Car@512ddf17, Car@2c13da15, Car@77556fd, Car@368239c8, Car@9e89d68, Car@3
+b192d32, Car@16f65612, Car@311d617d, Car@7c53a9eb, Car@ed17bee, Car@2a33fae0, Car@707f7052, Car@11028347, Car@14899482, Car@21588809, Car@2aae9190, Car@2f333739, Car@77468bd9, Car@12bb4df8, Car@4cc77c2e, Car@7a7b0070, Car@39a054a5, Car@71bc1ae4, Car@6ed3ef1, Car@2437c6dc, Car@1f89ab83, Car@e73f9ac, Car@61064425, C
+ar@7b1d7fff, Car@299a06ac, Car@383534aa, Car@6bc168e5, Car@7b3300e5, Car@2e5c649, Car@136432db, Car@7382f612, Car@1055e4af, Car@3caeaf62, Car@e6ea0c6, Car@6a38e57f, Car@5577140b, Car@1c6b6478, Car@67f89fa3, Car@4ac68d3e, Car@277c0f21, Car@6073f712, Car@43556938, Car@3d04a311, Car@7a46a697, Car@5f205aa, Car@6d86b08
+5, Car@75828a0f, Car@3abfe836, Car@2ff5659e, Car@77afea7d, Car@161cd475, Car@532760d8, Car@57fa26b7, Car@5f8ed237, Car@2f410acf, Car@47089e5f, Car@4141d797, Car@68f7aae2, Car@4f47d241, Car@4c3e4790, Car@38cccef, Car@5679c6c6, Car@27ddd392, Car@19e1023e, Car@7cef4e59, Car@64b8f8f4, Car@2db0f6b2, Car@3cd1f1c8, Car@3
+a4afd8d, Car@1996cd68, Car@3339ad8e, Car@555590, Car@6d1e7682, Car@424c0bc4, Car@3c679bde, Car@16b4a017, Car@8807e25, Car@2a3046da, Car@2a098129, Car@198e2867, Car@12f40c25, Car@3ada9e37, Car@5cbc508c, Car@3419866c, Car@63e31ee, Car@68fb2c38, Car@567d299b, Car@2eafffde, Car@59690aa4, Car@6842775d, Car@574caa3f, Ca
+r@64cee07, Car@1761e840, Car@6c629d6e, Car@5ecddf8f, Car@3f102e87, Car@27abe2cd, Car@5f5a92bb, Car@6fdb1f78, Car@51016012, Car@29444d75, Car@2280cdac, Car@1517365b, Car@4fccd51b, Car@44e81672, Car@60215eee, Car@4ca8195f, Car@65e579dc, Car@61baa894, Car@b065c63, Car@768debd, Car@490d6c15, Car@7d4793a8, Car@449b2d27
+, Car@5479e3f, Car@27082746, Car@66133adc, Car@7bfcd12c, Car@42f30e0a, Car@24273305, Car@5b1d2887, Car@46f5f779, Car@1c2c22f3, Car@18e8568, Car@33e5ccce, Car@5a42bbf4, Car@270421f5, Car@52d455b8, Car@4f4a7090, Car@18ef96, Car@6956de9, Car@769c9116, Car@6aceb1a5, Car@2d6d8735, Car@ba4d54, Car@12bc6874, Car@de0a01f,
+ Car@4c75cab9, Car@1ef7fe8e, Car@6f79caec, Car@67117f44, Car@5d3411d, Car@2471cca7, Car@5fe5c6f, Car@6979e8cb, Car@763d9750, Car@5c0369c4, Car@2be94b0f, Car@d70c109, Car@17ed40e0, Car@50675690, Car@31b7dea0, Car@3ac42916, Car@47d384ee, Car@2d6a9952, Car@22a71081, Car@3930015a, Car@629f0666, Car@1bc6a36e, Car@1ff8b
+8f, Car@387c703b, Car@224aed64, Car@c39f790, Car@71e7a66b, Car@2ac1fdc4, Car@5f150435, Car@1c53fd30, Car@50cbc42f, Car@75412c2f, Car@282ba1e, Car@13b6d03, Car@f5f2bb7, Car@73035e27, Car@64c64813, Car@3ecf72fd, Car@483bf400, Car@21a06946, Car@77f03bb1, Car@326de728, Car@25618e91, Car@7a92922, Car@71f2a7d5, Car@2cfb
+4a64, Car@5474c6c, Car@4b6995df, Car@2fc14f68, Car@591f989e, Car@66048bfd, Car@61443d8f, Car@445b84c0, Car@61a52fbd, Car@233c0b17, Car@63d4e2ba, Car@7bb11784, Car@33a10788, Car@7006c658, Car@34033bd0, Car@47fd17e3, Car@7cdbc5d3, Car@3aa9e816, Car@17d99928, Car@3834d63f, Car@1ae369b7, Car@6fffcba5, Car@34340fab, Ca
+r@2aafb23c, Car@2b80d80f, Car@3ab39c39, Car@2eee9593, Car@7907ec20, Car@546a03af, Car@721e0f4f, Car@28864e92, Car@6ea6d14e, Car@6ad5c04e, Car@6833ce2c, Car@725bef66, Car@2aaf7cc2, Car@6e3c1e69, Car@1888ff2c, Car@35851384, Car@649d209a, Car@6adca536, Car@357246de, Car@28f67ac7, Car@256216b3, Car@2a18f23c, Car@d7b15
+17, Car@16c0663d, Car@23223dd8, Car@4ec6a292, Car@1b40d5f0, Car@ea4a92b, Car@3c5a99da, Car@47f37ef1, Car@5a01ccaa, Car@71c7db30, Car@19bb089b, Car@4563e9ab, Car@11531931, Car@5e025e70, Car@1fbc7afb, Car@45c8e616, Car@4cdbe50f, Car@66d33a, Car@7cf10a6f, Car@7e0babb1, Car@6debcae2, Car@5ba23b66, Car@2ff4f00f, Car@c8
+18063, Car@3f0ee7cb, Car@75bd9247, Car@7d417077, Car@7dc36524, Car@35bbe5e8, Car@2c8d66b2, Car@5a39699c, Car@3cb5cdba, Car@56cbfb61, Car@1134affc, Car@d041cf, Car@129a8472, Car@1b0375b3, Car@2f7c7260, Car@2d209079, Car@6bdf28bb, Car@6b71769e, Car@2752f6e2, Car@e580929, Car@1cd072a9, Car@7c75222b, Car@4c203ea1, Car
+@27f674d, Car@1d251891, Car@48140564, Car@58ceff1, Car@7c30a502, Car@49e4cb85, Car@2133c8f8, Car@43a25848, Car@3ac3fd8b, Car@5594a1b5, Car@6a5fc7f7, Car@3b6eb2ec, Car@1e643faf, Car@6e8dacdf, Car@7a79be86, Car@34ce8af7, Car@b684286, Car@880ec60, Car@3f3afe78, Car@7f63425a, Car@36d64342, Car@39ba5a14, Car@511baa65, 
+Car@340f438e, Car@30c7da1e, Car@5b464ce8, Car@57829d67, Car@19dfb72a, Car@17c68925, Car@7e0ea639, Car@3d24753a, Car@59a6e353, Car@7a0ac6e3, Car@71be98f5, Car@6fadae5d, Car@17f6480, Car@2d6e8792, Car@2812cbfa, Car@2acf57e3, Car@506e6d5e, Car@96532d6, Car@3796751b, Car@67b64c45, Car@4411d970, Car@6442b0a6, Car@60f82
+f98, Car@35f983a6, Car@7f690630, Car@edf4efb, Car@2f7a2457, Car@566776ad, Car@6108b2d7, Car@1554909b, Car@6bf256fa, Car@6cd8737, Car@22f71333, Car@13969fbe, Car@6aaa5eb0, Car@3498ed, Car@1a407d53, Car@3d8c7aca, Car@5ebec15, Car@21bcffb5, Car@380fb434, Car@668bc3d5, Car@3cda1055, Car@7a5d012c, Car@3fb6a447, Car@79b
+4d0f, Car@6b2fad11, Car@79698539, Car@73f792cf, Car@2ed94a8b, Car@38082d64, Car@dfd3711, Car@42d3bd8b, Car@26ba2a48, Car@5f2050f6, Car@3b81a1bc, Car@64616ca2, Car@13fee20c, Car@4e04a765, Car@783e6358, Car@17550481, Car@735f7ae5, Car@180bc464, Car@1324409e, Car@2c6a3f77, Car@246ae04d, Car@62043840, Car@5315b42e, Ca
+r@2ef9b8bc, Car@5d624da6, Car@1e67b872, Car@60addb54, Car@3f2a3a5, Car@4cb2c100, Car@6fb554cc, Car@614c5515, Car@77b52d12, Car@2d554825, Car@68837a77, Car@6be46e8f, Car@3567135c, Car@327471b5, Car@4157f54e, Car@90f6bfd, Car@47f6473, Car@15975490, Car@6b143ee9, Car@1936f0f5, Car@6615435c, Car@4909b8da, Car@3a03464,
+ Car@2d3fcdbd, Car@617c74e5, Car@6537cf78, Car@67b6d4ae, Car@34b7bfc0, Car@366e2eef, Car@6df97b55, Car@3cbbc1e0, Car@35fb3008, Car@7225790e, Car@54a097cc, Car@36f6e879, Car@5a61f5df, Car@3551a94, Car@531be3c5, Car@52af6cff, Car@735b478, Car@2c9f9fb0, Car@2096442d, Car@9f70c54, Car@234bef66, Car@737996a0, Car@61dc0
+3ce, Car@50f8360d, Car@2cb4c3ab, Car@13c78c0b, Car@12843fce, Car@3dd3bcd, Car@97e1986, Car@26f67b76, Car@153f5a29, Car@7f560810, Car@69d9c55, Car@13a57a3b, Car@7ca48474, Car@337d0578, Car@59e84876, Car@61a485d2, Car@39fb3ab6, Car@6276ae34, Car@7946e1f4, Car@3c09711b, Car@5cc7c2a6, Car@b97c004, Car@4590c9c3, Car@32
+e6e9c3, Car@5056dfcb, Car@6574b225, Car@2669b199, Car@2344fc66, Car@458ad742, Car@5afa04c, Car@6ea12c19, Car@6a024a67, Car@7921b0a2, Car@174d20a, Car@66d2e7d9, Car@1efbd816, Car@6a2bcfcb, Car@4de8b406, Car@3c756e4d, Car@7c0e2abd, Car@48eff760, Car@402f32ff, Car@573f2bb1, Car@5ae9a829, Car@6d8a00e3, Car@548b7f67, C
+ar@7ac7a4e4, Car@6d78f375, Car@50c87b21, Car@5f375618, Car@1810399e, Car@32d992b2, Car@215be6bb, Car@4439f31e, Car@5dfcfece, Car@23ceabc1, Car@5d5eef3d, Car@56f4468b, Car@6cc4c815, Car@3a82f6ef, Car@100fc185, Car@643b1d11, Car@2ef5e5e3, Car@36d4b5c, Car@6d00a15d, Car@51efea79, Car@5034c75a, Car@396a51ab, Car@51081
+592, Car@7f9a81e8, Car@9629756, Car@62ee68d8, Car@735b5592, Car@58651fd0, Car@4520ebad, Car@5419f379, Car@7dc7cbad, Car@d2cc05a, Car@4f933fd1, Car@548a9f61, Car@1753acfe, Car@7c16905e, Car@2a2d45ba, Car@2a5ca609, Car@20e2cbe0, Car@68be2bc2, Car@28feb3fa, Car@675d3402, Car@51565ec2, Car@482f8f11, Car@1593948d, Car@
+1b604f19, Car@7823a2f9, Car@4cc0edeb, Car@457e2f02, Car@5c7fa833, Car@39aeed2f, Car@724af044, Car@4678c730, Car@6767c1fc, Car@29ee9faa, Car@c038203, Car@cc285f4, Car@55f3ddb1, Car@8bd1b6a, Car@18be83e4, Car@cb5822, Car@4b9e13df, Car@2b98378d, Car@475530b9, Car@1d057a39, Car@26be92ad, Car@4c70fda8, Car@224edc67, Ca
+r@14acaea5, Car@46d56d67, Car@d8355a8, Car@59fa1d9b, Car@28d25987, Car@4501b7af, Car@523884b2, Car@5b275dab, Car@61832929, Car@29774679, Car@3ffc5af1, Car@5e5792a0, Car@26653222, Car@3532ec19, Car@68c4039c, Car@ae45eb6, Car@59f99ea, Car@27efef64, Car@6f7fd0e6, Car@47c62251, Car@3e6fa38a, Car@66a3ffec, Car@77caeb3e
+, Car@1e88b3c, Car@42d80b78, Car@3bfdc050, Car@1bce4f0a, Car@5e3a8624, Car@5c3bd550, Car@91161c7, Car@604ed9f0, Car@6a4f787b, Car@685cb137, Car@6a41eaa2, Car@7cd62f43, Car@6d4b1c02, Car@6093dd95, Car@5622fdf, Car@4883b407, Car@7d9d1a19, Car@39c0f4a, Car@1794d431, Car@42e26948, Car@57baeedf, Car@343f4d3d, Car@53b32
+d7, Car@5442a311, Car@548e7350, Car@1a968a59, Car@4667ae56, Car@77cd7a0, Car@204f30ec, Car@e25b2fe, Car@754ba872, Car@146ba0ac, Car@4dfa3a9d, Car@6eebc39e, Car@464bee09, Car@f6c48ac, Car@13deb50e, Car@239963d8, Car@3abbfa04, Car@57fffcd7, Car@31ef45e3, Car@598067a5, Car@3c0ecd4b, Car@14bf9759, Car@5f341870, Car@55
+3f17c, Car@4f7d0008, Car@271053e1, Car@589838eb, Car@42dafa95, Car@6500df86, Car@402a079c, Car@59ec2012, Car@4cf777e8, Car@2f686d1f, Car@3fee9989, Car@73ad2d6, Car@7085bdee, Car@1ce92674, Car@5700d6b1, Car@6fd02e5, Car@5bcab519, Car@e45f292, Car@5f2108b5, Car@31a5c39e, Car@3f49dace, Car@1e397ed7, Car@490ab905, Car
+@56ac3a89, Car@27c20538, Car@72d818d1, Car@6e06451e, Car@59494225, Car@6e1567f1, Car@5cb9f472, Car@cb644e, Car@13805618, Car@56ef9176, Car@4566e5bd, Car@1ed4004b, Car@ff5b51f, Car@25bbe1b6, Car@5702b3b1, Car@69ea3742, Car@4b952a2d, Car@3159c4b8, Car@73846619, Car@4bec1f0c, Car@29ca901e, Car@5649fd9b, Car@6adede5, 
+Car@2d928643, Car@5025a98f, Car@49993335, Car@20322d26, Car@192b07fd, Car@64bfbc86, Car@64bf3bbf, Car@55d56113, Car@148080bb, Car@dc24521, Car@10bdf5e5, Car@6e1ec318, Car@7e0b0338, Car@617faa95, Car@1e127982, Car@60c6f5b, Car@2038ae61, Car@3c0f93f1, Car@31dc339b, Car@544fe44c, Car@31610302, Car@71318ec4, Car@21213
+b92, Car@a67c67e]
+[Drone 1, Drone 2, Drone 3, Drone 4, Drone 5, Drone 6, Drone 7, Drone 8, Drone 9, Drone 10, Drone 11, Drone 12, Drone 13, Drone 14, Drone 15, Drone 16, Drone 17, Drone 18, Drone 19, Drone 20, Drone 21, Drone 22, Drone 23, Drone 24, Drone 25, Drone 26, Drone 27, Drone 28, Drone 29, Drone 30, Drone 31, Drone 32, Dro
+ne 33, Drone 34, Drone 35, Drone 36, Drone 37, Drone 38, Drone 39, Drone 40, Drone 41, Drone 42, Drone 43, Drone 44, Drone 45, Drone 46, Drone 47, Drone 48, Drone 49, Drone 50, Drone 51, Drone 52, Drone 53, Drone 54, Drone 55, Drone 56, Drone 57, Drone 58, Drone 59, Drone 60, Drone 61, Drone 62, Drone 63, Drone 64
+, Drone 65, Drone 66, Drone 67, Drone 68, Drone 69, Drone 70, Drone 71, Drone 72, Drone 73, Drone 74, Drone 75, Drone 76, Drone 77, Drone 78, Drone 79, Drone 80, Drone 81, Drone 82, Drone 83, Drone 84, Drone 85, Drone 86, Drone 87, Drone 88, Drone 89, Drone 90, Drone 91, Drone 92, Drone 93, Drone 94, Drone 95, Dro
+ne 96, Drone 97, Drone 98, Drone 99, Drone 100]
+[ManagerDrone 1, ManagerDrone 2, ManagerDrone 3, ManagerDrone 4, ManagerDrone 5, ManagerDrone 6, ManagerDrone 7, ManagerDrone 8, ManagerDrone 9, ManagerDrone 10]
+Do You Want all Cars to Be Printing Out???: This is a lot of cars so you might not want this: nop 
+sh-4.4$ exit
+exit
+
+Script done on 2021-06-12 17:45:19-04:00 [COMMAND_EXIT_CODE="0"]

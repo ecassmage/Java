@@ -43,8 +43,8 @@ public class MyCompany {
             j = i;
         }
         Person[] Hello = company.sortEmployees("LastNames");
-        FriendsList.printList(Hello, "Name");
+        FriendList.printList(Hello, "Name");
         Person[] NextList = company.sortEmployeesByManager("LastNames");
-        FriendsList.printList(NextList, "Name");
+        FriendList.printList(NextList, "Name");
     }
 }

@@ -1,0 +1,94 @@
+Script started on 2021-06-13 10:53:03-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="20"]
+sh-4.4$ cat Robot.java
+import java.awt.Point;
+
+public class Robot {
+
+    /**
+     Tests the methods of the Robot class.
+     @param args not used
+     */
+    private Point pnt;
+    private int dir;
+    public static void main(String[] args){
+        // My Assumption (+east/-west, +south/-north) Going off of I guess coordinates of Computer.
+    }
+
+    public Robot(Point point, int dir){
+        pnt = point;
+        this.dir = dir;
+    }
+
+    public void turnLeft(){
+        if (dir == 0) dir = 3;
+        else dir--;
+    }
+    public void turnRight(){
+        if (dir == 3) dir = 0;
+        else dir++;
+    }
+    public void move(){
+        switch(dir){
+            case 0:
+                pnt.setLocation(pnt.getX(), pnt.getY()-1);
+                break;
+            case 1:
+                pnt.setLocation(pnt.getX()+1, pnt.getY());
+                break;
+            case 2:
+                pnt.setLocation(pnt.getX(), pnt.getY()+1);
+                break;
+            case 3:
+                pnt.setLocation(pnt.getX()-1, pnt.getY());
+                break;
+        }
+    }
+    public Point getLocation(){
+        return pnt;
+    }
+    public String getDirection(){
+        String[] DIR = {"N", "E", "S", "W"};
+        return DIR[dir];
+    }
+}
+sh-4.4$ j cat RobotTester.java
+import java.awt.Point;
+/**
+ A class to test the Robot class.
+ */
+public class RobotTester
+{
+    /**
+     Tests the methods of the Robot class.
+     @param args not used
+     */
+    public static void main(String[] args)
+    {
+// Create a new Robot object with the initial position of (5,5) and
+// initial direction to the East (1).
+        Robot robot = new Robot(new Point(5, 5), 1);
+        robot.move(); // 6, 5, 1
+        robot.turnRight(); // 6, 5, 2
+        robot.move(); // 6, 6, 2
+        robot.move(); // 6, 7, 2
+        robot.turnRight(); // 6, 7, 3
+        robot.move(); // 5, 7, 3
+        robot.move(); // 4, 7, 3
+        robot.turnLeft(); // 4, 7, 2
+        robot.move(); // 4, 8, 2
+        Point location = robot.getLocation();
+        System.out.println("Location: " + location.x + ", " + location.y);
+        System.out.println("Expected: 4, 8");
+        System.out.println("Direction: " + robot.getDirection());
+        System.out.println("Expected: S");
+    }
+}sh-4.4$ javac Robot.t java RobotTester.java
+[6n[6n[m[?25hsh-4.4$ java RobotTester. 
+[6n[m[?25hLocation: 4, 8
+Expected: 4, 8
+Direction: S
+Expected: S
+sh-4.4$ exit
+exit
+
+Script done on 2021-06-13 10:53:36-04:00 [COMMAND_EXIT_CODE="0"]

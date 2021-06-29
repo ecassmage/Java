@@ -1,0 +1,5 @@
+Script started on 2021-06-12 17:44:13-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ catexit       exit
+exit
+
+Script done on 2021-06-12 17:44:20-04:00 [COMMAND_EXIT_CODE="0"]

@@ -1,0 +1,245 @@
+Script started on 2021-06-13 12:18:04-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat Robot.java
+cat: Robot.java: No such file or directory
+sh-4.4$ cd src
+sh-4.4$ cad srcat Robot.java
+import java.awt.Point;
+import java.util.ArrayList;
+
+public class Robot {
+
+    /**
+     Tests the methods of the Robot class.
+     @param args not used
+     */
+    private Point pnt;
+    private int dir;
+    private ArrayList<String> WeHoldStuff;
+    public static void main(String[] args){
+        // My Assumption (+east/-west, +south/-north) Going off of I guess coordinates of Computer.
+        Robot robot = new Robot(new Point(5, 5), 1);
+        robot.move(); // 6, 5, 1
+        robot.turnRight(); // 6, 5, 2
+        robot.move(); // 6, 6, 2
+        robot.move(); // 6, 7, 2
+        robot.turnRight(); // 6, 7, 3
+        robot.move(); // 5, 7, 3
+        robot.move(); // 4, 7, 3
+        robot.turnLeft(); // 4, 7, 2
+        robot.move(); // 4, 8, 2
+        Point location = robot.getLocation();
+        System.out.println("Location: " + location.x + ", " + location.y);
+        System.out.println("Expected: 4, 8");
+        System.out.println("Direction: " + robot.getDirection());
+        System.out.println("Expected: S");
+        robot.printHistory();
+    }
+
+    public Robot(Point point, int dir){
+        pnt = point;
+        this.dir = dir;
+        this.WeHoldStuff = new ArrayList<>();
+    }
+
+    public void turnLeft(){
+        if (dir == 0) dir = 3;
+        else dir--;
+        update();
+    }
+    public void turnRight(){
+        if (dir == 3) dir = 0;
+        else dir++;
+        update();
+    }
+    public void move(){
+        switch(dir){
+            case 0:
+                pnt.setLocation(pnt.getX(), pnt.getY()-1);
+                break;
+            case 1:
+                pnt.setLocation(pnt.getX()+1, pnt.getY());
+                break;
+            case 2:
+                pnt.setLocation(pnt.getX(), pnt.getY()+1);
+                break;
+            case 3:
+                pnt.setLocation(pnt.getX()-1, pnt.getY());
+                break;
+        }
+        update();
+    }
+
+    private void update(){
+        WeHoldStuff.add("(" + Math.round(pnt.getX()) + ", " + Math.round(pnt.getY()) + "), " + getDirection());
+    }
+
+    public void printHistory(){
+        for (String str: WeHoldStuff){
+            System.out.println(str);
+        }
+    }
+    public Point getLocation(){
+        return pnt;
+    }
+    public String getDirection(){
+        String[] DIR = {"N", "E", "S", "W"};
+        return DIR[dir];
+    }
+}
+sh-4.4$ cat RobotTester,j  .java
+import java.awt.Point;
+/**
+ A class to test the Robot class.
+ */
+public class RobotTester
+{
+    /**
+     Tests the methods of the Robot class.
+     @param args not used
+     */
+    public static void main(String[] args)
+    {
+// Create a new Robot object with the initial position of (5,5) and
+// initial direction to the East (1).
+        Robot robot = new Robot(new Point(5, 5), 1);
+        robot.move(); // 6, 5, 1
+        robot.turnRight(); // 6, 5, 2
+        robot.move(); // 6, 6, 2
+        robot.move(); // 6, 7, 2
+        robot.turnRight(); // 6, 7, 3
+        robot.move(); // 5, 7, 3
+        robot.move(); // 4, 7, 3
+        robot.turnLeft(); // 4, 7, 2
+        robot.move(); // 4, 8, 2
+        Point location = robot.getLocation();
+        System.out.println("Location: " + location.x + ", " + location.y);
+        System.out.println("Expected: 4, 8");
+        System.out.println("Direction: " + robot.getDirection());
+        System.out.println("Expected: S");
+        System.out.println("\nThis is the History Channel For Moving Robots!!!");
+        robot.printHistory();
+    }
+}sh-4.4$ java  c RobotTester.kav   java
+[6n[6n[m[?25hsh-4.4$ java Robot, TYe  esst  ter
+[6n[m[?25hLocation: 4, 8
+Expected: 4, 8
+Direction: S
+Expected: S
+
+This is the History Channel For Moving Robots!!!
+(6, 5), E
+(6, 5), S
+(6, 6), S
+(6, 7), S
+(6, 7), W
+(5, 7), W
+(4, 7), W
+(4, 7), S
+(4, 8), S
+sh-4.4$ script
+Script started, file is typescript
+sh-4.4$ clear
+[H[2J[3Jsh-4.4$ script        ext it
+exit
+Script done, file is typescript
+sh-4.4$ clear
+[H[2J[3Jsh-4.4$ scriopt   pt Dealer      Fibi onn acci.txtg
+Script started, file is Fibonacci.txtg
+sh-4.4$ exit
+exit
+Script done, file is Fibonacci.txtg
+sh-4.4$ script Fibonacci.txtg 
+Script started, file is Fibonacci.txt
+sh-4.4$ cat Fibonn acci.java
+import java.util.Hashtable;
+import java.util.ArrayList;
+
+public class Fibonacci {
+
+    private Hashtable<Long, Long> FibonacciList;
+
+    public static void main(String[] args){
+        Fibonacci F = new Fibonacci();
+        System.out.println(F.getFibonacci(10));
+        F.printFibonacciSeq(10);
+        F.printFibonacciSeq(90);
+    }
+
+    public Fibonacci(){
+        FibonacciList = new Hashtable<>(); // I Didn't See a Point to using a List over a HashTable.
+        FibonacciList.put(0L, 0L);
+        FibonacciList.put(1L, 1L);
+    }
+
+    public long getFibonacci(long num){return FibonacciCalc(num-1);}
+
+    public void printFibonacciSeq(long num){
+        if (FibonacciList.size() < num){
+            System.out.println("The Number you entered is Invalid, So We are going to extend the fibonacci sequence a little if possible");
+            getFibonacci(num);
+        }
+        System.out.print("[");
+        for (long i = 0; i < num; i++){
+            if (i > 0) System.out.print(", ");
+            System.out.print(FibonacciList.get(i));
+        }
+        System.out.println("]");
+    }
+
+    private long FibonacciCalc(long num){
+        if (FibonacciList.containsKey(num)) return FibonacciList.get(num);
+        long  num2 = FibonacciCalc((num - 1)) + FibonacciCalc(num - 2);
+        FibonacciList.put(num, num2);
+        return num2;
+    }
+
+}
+sh-4.4$ cat Fibonacci.javaat [1@T[1@e[1@s[1@t[1P[1P[1P[1PFibonacci[1@T[1@e[1@s[1@t
+import java.util.Scanner;
+
+public class FibonacciTest {
+
+    public static void main(String[] args){
+        Fibonacci F = new Fibonacci();
+        F.printFibonacciSeq(getFib());
+        System.out.println();
+        F.printFibonacciSeq(getFib());
+        System.out.println();
+        F.printFibonacciSeq(getFib());
+        System.out.println();
+        F.printFibonacciSeq(getFib());
+        System.out.println();
+    }
+
+    public static long getFib(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Please enter the length of the Fibonacci Sequence you want!!: ");
+        return sc.nextLong();
+
+    }
+}
+sh-4.4$ javac f Fibo onacci.java
+[6n[6n[m[?25hsh-4.4$ javac Fibonacci.java[1@T[1@e[1@s[1@t
+[6n[m[?25hsh-4.4$ java Fibonoa  acciTest
+[6n[m[?25hPlease enter the length of the Fibonacci Sequence you want!!: 15
+The Number you entered is Invalid, So We are going to extend the fibonacci sequence a little if possible
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+
+Please enter the length of the Fibonacci Sequence you want!!:[1C14
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233]
+
+Please enter the length of the Fibonacci Sequence you want!!:[1C15
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+
+Please enter the length of the Fibonacci Sequence you want!!:[1C16
+The Number you entered is Invalid, So We are going to extend the fibonacci sequence a little if possible
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610]
+
+sh-4.4$ exit
+exit
+Script done, file is Fibonacci.txt
+sh-4.4$ clear
+[H[2J[3Jsh-4.4$ exit
+exit
+
+Script done on 2021-06-13 12:20:05-04:00 [COMMAND_EXIT_CODE="0"]

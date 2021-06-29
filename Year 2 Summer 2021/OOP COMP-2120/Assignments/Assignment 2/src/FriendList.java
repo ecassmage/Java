@@ -1,12 +1,12 @@
 import java.lang.reflect.*;
 import java.util.Arrays;
 
-public class FriendsList {
+public class FriendList {
     private Person[] FriendsList;
 //    private int[] quickLastNames = null;
     private int Len = 0;
     public static void main(String[] args){
-        FriendsList list = new FriendsList();
+        FriendList list = new FriendList();
         Person F1 = new Person("Evan Morrison", "519 318 2704", 4, 10);
         Person F10 = new Person("Evan Morrison", "519 318 2704", 4, 10);
         Person F11 = new Person("Evan Morrisons", "519 318 2704", 4, 10);
@@ -134,7 +134,7 @@ public class FriendsList {
 
     }
         // Getters
-    public static int len(FriendsList fl){ return fl.Len; }
+    public static int len(FriendList fl){ return fl.Len; }
             // Required Methods
     public Person[] getSortedByLastNames(){ return lastNamesSorted(); }
     public int getFriendCount(){ return len(this); }

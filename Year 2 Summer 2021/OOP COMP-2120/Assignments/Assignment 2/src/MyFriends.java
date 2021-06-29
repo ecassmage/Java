@@ -1,6 +1,6 @@
 public class MyFriends {
     public static void main(String[] args){
-        FriendsList list = new FriendsList();
+        FriendList list = new FriendList();
         Person[] listOfFriends = {
             new Person("Evan Morrison", "519 318 2704", 4, 10),
             new Person("Evan NotMorrison", "519 318 2704", 4, 10),
@@ -28,20 +28,20 @@ public class MyFriends {
         list.printPerson(list.getPerson("Evan", "Morrison"));
         list.printPerson(list.getPerson("Evan", "Borrison"));
         Person[] listOfLastNames = list.getSortedByLastNames();
-        FriendsList.printList(listOfLastNames, "Names");
+        FriendList.printList(listOfLastNames, "Names");
         Person[] listOfAprilBirthdays = list.getListByMonth("April"); // You can also put just 4 in as well to get april, Strings though seem easier for most to understand quickly
-        FriendsList.printList(listOfAprilBirthdays, "BirthDay");
+        FriendList.printList(listOfAprilBirthdays, "BirthDay");
         Person[] listOf1stBDaysByLastName = list.getListByDay(1);
-        FriendsList.printList(listOf1stBDaysByLastName, "LastName");
+        FriendList.printList(listOf1stBDaysByLastName, "LastName");
         list.modifyFriend(list.getPerson("Loser", "Fire"), "April", "Tenth", "5191111111", 4, 10);
         Person[] listOfFriendsBornAprilTenth = list.getPeople(4, 10);
-        FriendsList.printList(listOfFriendsBornAprilTenth, "Names");
+        FriendList.printList(listOfFriendsBornAprilTenth, "Names");
         String phoneNumber = list.getCellPhoneWithName("Cod Wallet");
         System.out.println("Expected Phone Number: 1 234 345-4456, Received: " + phoneNumber);
         shaneTest(list);
     }
 
-    private static void shaneTest(FriendsList list){
+    private static void shaneTest(FriendList list){
         Person[] listOfPeople = {
                 new Person("Shane Hall"), // 1
                 new Person("Hello World"),

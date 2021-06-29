@@ -55,7 +55,7 @@ public class Company {
     // GRRR DUMB BONUSES
     public Person[] sortEmployees(String code){ return sortEmployees(Employees, code); }
     public static Person[] sortEmployees(Employee[] list, String code) {
-        return FriendsList.sort(list, code);
+        return FriendList.sort(list, code);
     }
     // GRRR DUMB BONUSES  I am kind of happy I procrastinated making that dumb sorting algorithm since this was easy because of it.
     // I hope it is fine that I am letting them be sent back as Person[] instead of Employee[]/Manager[]. They still retain all the information

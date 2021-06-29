@@ -1,0 +1,352 @@
+Script started on 2021-06-27 16:40:41-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat Shape  
+cat: Shape: No such file or directory
+sh-4.4$ cd sc rc
+sh-4.4$ cd srcat Shape
+cat: Shape: No such file or directory
+sh-4.4$ cat Shape.java
+public abstract class Shape implements Comparable<Shape>{
+
+    private String name;
+
+    public Shape(){
+        this.name = "General Shape";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public abstract double area();
+
+    @Override
+    public int compareTo(Shape o) {
+        if (this.area() < o.area())
+            return -1;
+        if (this.area() > o.area())
+            return 1;
+        return 0;
+
+    }
+
+    public double round(double num, int roundNum){ // I dislike printing really long doubles as it just shoves a bunch of mostly useless information in your face making it harder to read.
+        int j = 1;
+        for (int i = 0; i < roundNum; i++) j *= 10;
+        return ((double) Math.round(num * j)) / j;
+    }
+
+    @Override
+    public String toString(){  // Pointless but meh, Only useful if new shape is added without override of its own.
+        return "Shape = " + name + ", Area = " + round(area(), 3);
+    }
+}
+sh-4.4$ cat Square.java
+public class Square extends Shape {
+
+    private double side;
+
+    public Square(double side){
+        this.setName("Square");
+        this.side = side;
+    }
+
+    public double getSide() {
+        return side;
+    }
+
+    @Override
+    public double area() {
+        return this.side * this.side;
+    }
+
+    @Override
+    public String toString(){
+        return "Shape = " + getName() + ", Area = " + round(area(), 3) + ", Sides = " + round(side, 3);
+    }
+}
+sh-4.4$ cat Oval.java
+public class Oval extends Shape {
+
+    private double[] radius;
+
+    public Oval(double radiusWidth, double radiusHeight){
+        this.setName("Oval");
+        this.radius = new double[]{radiusWidth, radiusHeight};
+    }
+
+    public double[] getRadius() { return radius; }
+    public double getRadiusHeight() { return radius[0]; }
+    public double getRadiusWidth() { return radius[1]; }
+
+    @Override
+    public double area() { return Math.PI * this.radius[0] * this.radius[1]; }
+
+    public String toString(){
+        return "Shape = " + getName() + ", Area = " + round(area(), 3) + ", Radius Width = " + round(radius[0], 3) + ", Radius Height = " + round(radius[1], 3);
+    }
+
+}
+sh-4.4$ cat Circle.java
+public class Circle extends Shape {
+
+    private double radius;
+
+    public Circle(double radius){
+        this.setName("Circle");
+        this.radius = radius;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    @Override
+    public double area() {
+        return Math.PI * this.radius * this.radius;
+    }
+
+    public String toString(){
+        return "Shape = " + getName() + ", Area = " + round(area(), 3) + ", Radius = " + round(radius, 3);
+    }
+}
+sh-4.4$ cat Trianlge    ngle.java
+public class Triangle extends Shape {
+
+    private double base;
+    private double height;
+
+    public Triangle(double base, double height){
+        this.setName("Triangle");
+        this.base = base;
+        this.height = height;
+    }
+
+    public double getBase() {
+        return base;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    @Override
+    public double area() {
+        return (this.base * this.height) / 2;
+    }
+
+    public String toString(){
+        return "Shape = " + getName() + ", Area = " + round(area(), 3) + ", Base = " + round(base, 3) + ", Height = " + round(height, 3);
+    }
+}
+sh-4.4$ javac TesterClass.java
+[6n[6n[m[?25hsh-4.4$ cat TesterCa;  lass.java
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Random;
+
+public class TesterClass {
+    Random R = new Random();
+    public static void main(String[] args){
+        TesterClass T = new TesterClass();
+        System.out.println("\n\tThis is The Persons Test Beginning\n");
+        T.testingPersons();
+        System.out.println("\n\tThis is The Persons Test Ending\n");
+        System.out.println("\n\tThis is The Shapes Test Beginning\n");
+        T.testingShapes();
+        System.out.println("\n\tThis is The Shapes Test Ending\n");
+    }
+
+    public void testingPersons(){
+        Manager M = new Manager("Evan Morrison", 20, "Male", 1000000, new int[]{1, 1, 1}, 1000);
+        Employee E = new Employee("Connor Morrison", 23, "Male", 100, new int[]{2, 2, 2});
+        Student S = new Student("John Morrison", 99, "Male", "Not a Computer Program", "Best Level, Even Higher then PH.D", 0);
+        System.out.println(M);
+        System.out.println(E);
+        System.out.println(S);
+    }
+
+    public double rand(int num1, int num2){
+        return R.nextDouble() + R.nextInt(num2 - num1) + num1;
+    } // Python Randoms :)
+    public double rand(int num){
+        return rand(0, num);
+    }  // Same as Above
+    // My Fixation on Python is Probably Unhealthy.
+    public void testingShapes(){
+        Random R = new Random();
+        ArrayList<Shape> BigListOfShapes = new ArrayList<>();
+        Scanner S = new Scanner(System.in);
+        BreakWhileLoop:{
+            while (true) {
+                System.out.print("Enter Something Please:\nT for Triangle\nC for Circle\nQ for Square\nO for Oval\nP for Printing List\nE for Exit\nSo What Do Ya Want??: ");
+                String chars = S.nextLine();
+                for (int i = 0; i < chars.length(); i++) {
+                    switch (chars.charAt(i)) {
+                        case 'T':
+                            //Triangle
+                            BigListOfShapes.add(new Triangle(rand(1000), rand(1000)));
+                            break;
+                        case 'C':
+                            //Circle
+                            BigListOfShapes.add(new Circle(rand(1000)));
+                            break;
+                        case 'Q':
+                            //Square
+                            BigListOfShapes.add(new Square(rand(1000)));
+                            break;
+                        case 'O':
+                            //Oval
+                            BigListOfShapes.add(new Oval(rand(1000), rand(1000)));
+                            break;
+                        case 'P':
+                            //Print List
+                            print(BigListOfShapes);
+                            break;
+                        case 'E':
+                            //Exit Infinite Loop
+                            break BreakWhileLoop;
+                    }
+                }
+            }
+        }
+        System.out.println("\n\tThis is the Final State of the Array List");
+        print(BigListOfShapes);
+    }
+    public static void print(ArrayList<Shape> Shapes){
+        for (Shape S: Shapes) System.out.println(S);
+    }
+}
+sh-4.4$ cat TesterClass.javash-4.4$ [2@javac TesterClass.java
+[6n[m[?25hsh-4.4$ java TesterClass
+[6n[m[?25h
+        This is The Persons Test Beginning
+
+Evan Morrison, Manager, Salary = $1000000.0/year, Weekly Bonus = 1000.0
+Connor Morrison, Employee, Salary = $100.0/year
+John Morrison, Student, Program = Not a Computer Program, Level = Best Level, Even Higher then PH.D, Year = 0
+
+        This is The Persons Test Ending
+
+
+        This is The Shapes Test Beginning
+
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CT
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CCCQOOP
+Shape = Triangle, Area = 135308.585, Base = 639.884, Height = 422.916
+Shape = Circle, Area = 2174936.161, Radius = 832.048
+Shape = Circle, Area = 353562.449, Radius = 335.473
+Shape = Square, Area = 26747.633, Sides = 163.547
+Shape = Oval, Area = 916548.995, Radius Width = 390.051, Radius Height = 747.971
+Shape = Oval, Area = 1165803.708, Radius Width = 601.903, Radius Height = 616.523
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CO
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CQ
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CC
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CP
+Shape = Triangle, Area = 135308.585, Base = 639.884, Height = 422.916
+Shape = Circle, Area = 2174936.161, Radius = 832.048
+Shape = Circle, Area = 353562.449, Radius = 335.473
+Shape = Square, Area = 26747.633, Sides = 163.547
+Shape = Oval, Area = 916548.995, Radius Width = 390.051, Radius Height = 747.971
+Shape = Oval, Area = 1165803.708, Radius Width = 601.903, Radius Height = 616.523
+Shape = Oval, Area = 99418.944, Radius Width = 510.589, Radius Height = 61.979
+Shape = Square, Area = 770433.601, Sides = 877.743
+Shape = Circle, Area = 33742.003, Radius = 103.636
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CT
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CT
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CT
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CE
+
+        This is the Final State of the Array List
+Shape = Triangle, Area = 135308.585, Base = 639.884, Height = 422.916
+Shape = Circle, Area = 2174936.161, Radius = 832.048
+Shape = Circle, Area = 353562.449, Radius = 335.473
+Shape = Square, Area = 26747.633, Sides = 163.547
+Shape = Oval, Area = 916548.995, Radius Width = 390.051, Radius Height = 747.971
+Shape = Oval, Area = 1165803.708, Radius Width = 601.903, Radius Height = 616.523
+Shape = Oval, Area = 99418.944, Radius Width = 510.589, Radius Height = 61.979
+Shape = Square, Area = 770433.601, Sides = 877.743
+Shape = Circle, Area = 33742.003, Radius = 103.636
+Shape = Triangle, Area = 127302.515, Base = 396.548, Height = 642.053
+Shape = Triangle, Area = 74986.318, Base = 259.702, Height = 577.481
+Shape = Triangle, Area = 107134.713, Base = 420.175, Height = 509.953
+
+        This is The Shapes Test Ending
+
+sh-4.4$ exit
+exit
+
+Script done on 2021-06-27 16:42:04-04:00 [COMMAND_EXIT_CODE="0"]

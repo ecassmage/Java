@@ -1,0 +1,90 @@
+Script started on 2021-06-13 12:19:07-04:00 [TERM="xterm-256color" TTY="/dev/pty0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat Fibonn acci.java
+import java.util.Hashtable;
+import java.util.ArrayList;
+
+public class Fibonacci {
+
+    private Hashtable<Long, Long> FibonacciList;
+
+    public static void main(String[] args){
+        Fibonacci F = new Fibonacci();
+        System.out.println(F.getFibonacci(10));
+        F.printFibonacciSeq(10);
+        F.printFibonacciSeq(90);
+    }
+
+    public Fibonacci(){
+        FibonacciList = new Hashtable<>(); // I Didn't See a Point to using a List over a HashTable.
+        FibonacciList.put(0L, 0L);
+        FibonacciList.put(1L, 1L);
+    }
+
+    public long getFibonacci(long num){return FibonacciCalc(num-1);}
+
+    public void printFibonacciSeq(long num){
+        if (FibonacciList.size() < num){
+            System.out.println("The Number you entered is Invalid, So We are going to extend the fibonacci sequence a little if possible");
+            getFibonacci(num);
+        }
+        System.out.print("[");
+        for (long i = 0; i < num; i++){
+            if (i > 0) System.out.print(", ");
+            System.out.print(FibonacciList.get(i));
+        }
+        System.out.println("]");
+    }
+
+    private long FibonacciCalc(long num){
+        if (FibonacciList.containsKey(num)) return FibonacciList.get(num);
+        long  num2 = FibonacciCalc((num - 1)) + FibonacciCalc(num - 2);
+        FibonacciList.put(num, num2);
+        return num2;
+    }
+
+}
+sh-4.4$ cat Fibonacci.javaat [1@T[1@e[1@s[1@t[1P[1P[1P[1PFibonacci[1@T[1@e[1@s[1@t
+import java.util.Scanner;
+
+public class FibonacciTest {
+
+    public static void main(String[] args){
+        Fibonacci F = new Fibonacci();
+        F.printFibonacciSeq(getFib());
+        System.out.println();
+        F.printFibonacciSeq(getFib());
+        System.out.println();
+        F.printFibonacciSeq(getFib());
+        System.out.println();
+        F.printFibonacciSeq(getFib());
+        System.out.println();
+    }
+
+    public static long getFib(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Please enter the length of the Fibonacci Sequence you want!!: ");
+        return sc.nextLong();
+
+    }
+}
+sh-4.4$ javac f Fibo onacci.java
+[6n[6n[m[?25hsh-4.4$ javac Fibonacci.java[1@T[1@e[1@s[1@t
+[6n[m[?25hsh-4.4$ java Fibonoa  acciTest
+[6n[m[?25hPlease enter the length of the Fibonacci Sequence you want!!: 15
+The Number you entered is Invalid, So We are going to extend the fibonacci sequence a little if possible
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+
+Please enter the length of the Fibonacci Sequence you want!!:[1C14
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233]
+
+Please enter the length of the Fibonacci Sequence you want!!:[1C15
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+
+Please enter the length of the Fibonacci Sequence you want!!:[1C16
+The Number you entered is Invalid, So We are going to extend the fibonacci sequence a little if possible
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610]
+
+sh-4.4$ exit
+exit
+
+Script done on 2021-06-13 12:20:00-04:00 [COMMAND_EXIT_CODE="0"]

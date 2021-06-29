@@ -1,0 +1,246 @@
+Script started on 2021-06-27 16:52:25-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="25"]
+sh-4.4$ cat  d src
+sh-4.4$ cat Person.java
+public class Person {
+    private String[] Name;
+    private int age;
+    private String gender; // Yes You can be an Apache attack Helicopter.
+
+    public static void main(String[] args){
+
+    }
+    public Person(String name, int age, String gender){
+        this(name.split(" "), age, gender);
+    }
+    public Person(String[] name, int age, String gender){
+        this.Name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+
+    public String getName(){ return Name[0] + " " + Name[1]; }
+    public int getAge(){ return age; }
+    public String getGender(){ return gender; }
+
+    public void setName(String name){
+        this.Name = name.split(" ");
+    }
+    public void setFName(String fName){
+        this.Name[0] = fName;
+    }
+    public void setLName(String lName){
+        this.Name[1] = lName;
+    }
+    public void setAge(int age){
+        this.age = age;
+    }
+    public void setGender(String gender){
+        this.gender = gender;
+    }
+
+    @Override
+    public String toString(){
+        //No Idea if needed, probably not but meh.
+        return getName() + ", Person, Age = " + age + ", Gender = " + gender;
+    }
+}
+sh-4.4$ ' cd at Student./ java
+public class Student extends Person {
+    private String Program;
+    private String Level;
+    private int year;
+    public static void main(String[] args){
+
+    }
+
+    public Student(String name, int age, String gender, String program, String level, int year){
+        this(name.split(" "), age, gender, program, level, year);
+    }
+    public Student(String[] name, int age, String gender, String program, String level, int year){
+        super(name, age, gender);
+        this.Program = program;
+        this.Level = level;
+        this.year = year;
+    }
+
+    @Override
+    public String toString(){
+        //No Idea if needed, probably not but meh.
+        return getName() + ", Student, Program = " + Program + ", Level = " + Level + ", Year = " + year;
+    }
+
+    public String getProgram(){ return Program; }
+    public String getLevel(){ return Level; }
+    public int getYear(){ return year; }
+
+    public void setProgram(String program) { this.Program = program; }
+    public void setLevel(String level) { this.Level = level; }
+    public void setYear(int year) { this.year = year; }
+}
+sh-4.4$ cat Employee.java
+public class Employee extends Person{
+    private double Salary;
+    private int[] hiringDate;
+
+    public Employee(String name, int age, String gender, double Salary, int hiringYear){
+        this(name.split(" "), age, gender, Salary, new int[]{0, 0, hiringYear});
+    }
+    public Employee(String name, int age, String gender, double Salary, int[] DMY){
+        this(name.split(" "), age, gender, Salary, DMY);
+    }
+    public Employee(String[] name, int age, String gender, double Salary, int[] DMY){
+        super(name, age, gender);
+        this.Salary = Salary;
+        this.hiringDate = DMY;
+    }
+    @Override
+    public String toString(){
+        return getName() + ", Employee, Salary = $" + Salary + "/year";
+    }
+
+    public double getSalary(){ return Salary; }
+    public int[] getHiringDMY(){ return hiringDate; }
+    public int getHiringYear(){ return hiringDate[2]; }
+    public void setSalary(double salary) { this.Salary = salary; }
+    public void setHiringDate(int Day, int Month, int Year) {
+        this.hiringDate[0] = Day;
+        this.hiringDate[1] = Month;
+        this.hiringDate[2] = Year;
+    }
+}
+sh-4.4$ cat Manager.java
+public class Manager extends Employee {
+    private double bonus;
+    public static void main(String[] args){
+
+    }
+
+    public Manager(){this(new String[]{null, null}, 0, "Apache Attack Helicopter", 0, new int[]{0, 0, 0}, 0);}
+    public Manager(double bonus){ this(new String[]{null, null}, 0, "Apache Attack Helicopter", 0, new int[]{0, 0, 0}, bonus); }
+    public Manager(String name, int age, String Gender , double Salary, int hiringYear, double bonus){ this(name.split(" "), age, Gender, Salary, new int[]{0, 0, hiringYear}, bonus); }
+    public Manager(String name, int age, String Gender, double Salary, int[] DMY, double bonus){ this(name.split(" "), age, Gender, Salary, DMY, bonus); }
+    public Manager(String fName, String lName, int age, String Gender, double Salary, int[] DMY, double bonus){ this(new String[]{fName, lName}, age, Gender, Salary, DMY, bonus); }
+
+    public Manager(String[] name, int age, String Gender, double Salary, int[] DMY, double bonus){
+        super(name, age, Gender, Salary, DMY);
+        this.bonus = bonus;
+    }
+
+    @Override
+    public String toString(){
+        return getName() + ", Manager, Salary = $" + getSalary() + "/year, Weekly Bonus = " + bonus;
+    }
+
+    public void setBonus(double bonus){ this.bonus = bonus; };
+}
+sh-4.4$ javac     cat Tester. Classk .java
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Random;
+
+public class TesterClass {
+    Random R = new Random();
+    public static void main(String[] args){
+        TesterClass T = new TesterClass();
+        System.out.println("\n\tThis is The Persons Test Beginning\n");
+        T.testingPersons();
+        System.out.println("\n\tThis is The Persons Test Ending\n");
+        System.out.println("\n\tThis is The Shapes Test Beginning\n");
+        T.testingShapes();
+        System.out.println("\n\tThis is The Shapes Test Ending\n");
+    }
+
+    public void testingPersons(){
+        Manager M = new Manager("Evan Morrison", 20, "Male", 1000000, new int[]{1, 1, 1}, 1000);
+        Employee E = new Employee("Connor Morrison", 23, "Male", 100, new int[]{2, 2, 2});
+        Student S = new Student("John Morrison", 99, "Male", "Not a Computer Program", "Best Level, Even Higher then PH.D", 0);
+        Person P = new Person("Person Morrison", 99, "Male");
+        System.out.println(M);
+        System.out.println(E);
+        System.out.println(S);
+        System.out.println(P);
+    }
+
+    public double rand(int num1, int num2){
+        return R.nextDouble() + R.nextInt(num2 - num1) + num1;
+    } // Python Randoms :)
+    public double rand(int num){
+        return rand(0, num);
+    }  // Same as Above
+    // My Fixation on Python is Probably Unhealthy.
+    public void testingShapes(){
+        Random R = new Random();
+        ArrayList<Shape> BigListOfShapes = new ArrayList<>();
+        Scanner S = new Scanner(System.in);
+        BreakWhileLoop:{
+            while (true) {
+                System.out.print("Enter Something Please:\nT for Triangle\nC for Circle\nQ for Square\nO for Oval\nP for Printing List\nE for Exit\nSo What Do Ya Want??: ");
+                String chars = S.nextLine();
+                for (int i = 0; i < chars.length(); i++) {
+                    switch (chars.charAt(i)) {
+                        case 'T':
+                            //Triangle
+                            BigListOfShapes.add(new Triangle(rand(1000), rand(1000)));
+                            break;
+                        case 'C':
+                            //Circle
+                            BigListOfShapes.add(new Circle(rand(1000)));
+                            break;
+                        case 'Q':
+                            //Square
+                            BigListOfShapes.add(new Square(rand(1000)));
+                            break;
+                        case 'O':
+                            //Oval
+                            BigListOfShapes.add(new Oval(rand(1000), rand(1000)));
+                            break;
+                        case 'P':
+                            //Print List
+                            print(BigListOfShapes);
+                            break;
+                        case 'E':
+                            //Exit Infinite Loop
+                            break BreakWhileLoop;
+                    }
+                }
+            }
+        }
+        System.out.println("\n\tThis is the Final State of the Array List");
+        print(BigListOfShapes);
+    }
+    public static void print(ArrayList<Shape> Shapes){
+        for (Shape S: Shapes) System.out.println(S);
+    }
+}
+sh-4.4$ javac TesterClass.java
+[6n[6n[m[?25hsh-4.4$ java TesterClass
+[6n[m[?25h
+        This is The Persons Test Beginning
+
+Evan Morrison, Manager, Salary = $1000000.0/year, Weekly Bonus = 1000.0
+Connor Morrison, Employee, Salary = $100.0/year
+John Morrison, Student, Program = Not a Computer Program, Level = Best Level, Even Higher then PH.D, Year = 0
+Person Morrison, Person, Age = 99, Gender = Male
+
+        This is The Persons Test Ending
+
+
+        This is The Shapes Test Beginning
+
+Enter Something Please:
+T for Triangle
+C for Circle
+Q for Square
+O for Oval
+P for Printing List
+E for Exit
+So What Do Ya Want??:[1CE
+
+        This is the Final State of the Array List
+
+        This is The Shapes Test Ending
+
+sh-4.4$ exit
+exit
+
+Script done on 2021-06-27 16:53:12-04:00 [COMMAND_EXIT_CODE="0"]
