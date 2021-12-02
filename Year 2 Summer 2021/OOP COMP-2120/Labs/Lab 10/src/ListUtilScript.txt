@@ -1,0 +1,44 @@
+Script started on 2021-08-01 14:14:20-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat ListUtil.java
+import java.util.LinkedList;
+/**
+ This class supplies a utility method to reverse the entries in a linked list.
+ */
+public class ListUtil {
+    /**
+     Reverses the elements in a linked list
+     @param list the linked list to reverse
+     */
+    public static void reverse(LinkedList<String> list) {
+        // I Copy Pasted From ArrayListUtil.java
+        for (int i = 1; i < list.size(); i++)   // This loops through the array. can't use fancy for loop since manipulating array.
+            list.add(0, list.remove(i));  // First removes the Element at Index I then once it is returned, adds it back into the list at index 0, pushing everything else up 1 index position.
+    }
+}sh-4.4$ cat ReverseTester.java
+import java.util.LinkedList;
+/**
+ A test program to reverse the entries in a linked list.
+ */
+public class ReverseTester
+{
+    public static void main(String[] args)
+    {
+        LinkedList<String> employeeNames = new LinkedList<>();
+        employeeNames.addLast("Dick");
+        employeeNames.addLast("Harry");
+        employeeNames.addLast("Romeo");
+        employeeNames.addLast("Tom");
+        System.out.println("Before Reversal: \t" + employeeNames);
+        ListUtil.reverse(employeeNames);
+        System.out.println("After Reversal: \t" + employeeNames);
+        System.out.println("Expected:       \t[Tom, Romeo, Harry, Dick]");
+    }
+}sh-4.4$ javac ReverseTester.java
+[6n[6n[m[?25hsh-4.4$ java ReverseTester
+[6n[m[?25hBefore Reversal:        [Dick, Harry, Romeo, Tom]
+After Reversal:         [Tom, Romeo, Harry, Dick]
+Expected:               [Tom, Romeo, Harry, Dick]
+sh-4.4$ exit
+exit
+
+Script done on 2021-08-01 14:14:54-04:00 [COMMAND_EXIT_CODE="0"]

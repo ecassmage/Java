@@ -1,0 +1,176 @@
+Script started on 2021-07-11 12:57:17-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat Activity. 2Tester.java
+\cat: Activity2Tester.java: No such file or directory
+sh-4.4$ \ cat Activity2Tester.javash-4.4$ exit[Kcat Activity2Tester.javash-4.4$ [Kcd src
+sh-4.4$ cd srcat Activity2Tester.java
+public class Activity2Tester {
+    public static void main(String[] args){
+        Triangle T = new Triangle(10, 10);
+        Triangle T2 = new Triangle(10, 10);
+        Oval O = new Oval(10, 10);
+        System.out.println("This is Number: " + T.compareTo(O));  // Umm I think either I am misunderstanding the question or the prof accidentally gave the answer to this one but Comparable was already implemented in Shapes
+        System.out.println("This is Number: " + T.compareTo(T2));
+        System.out.println("This is Number: " + O.compareTo(T));
+    }
+}
+sh-4.4$ cat Cirvl  cle.java
+public class Circle extends Shape {
+
+    private double radius;
+
+    public Circle(double radius){
+        this.setName("Others.Circle");
+        this.radius = radius;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    @Override
+    public double area() {
+        return Math.PI * this.radius * this.radius;
+    }
+
+    public String toString(){
+        return "Others.Shape = " + getName() + ", Area = " + round(area(), 3) + ", Radius = " + round(radius, 3);
+    }
+}
+sh-4.4$ cat Shape.java
+public abstract class Shape implements Comparable<Shape>{
+    // Umm I think either I am misunderstanding the question or the prof accidentally gave the answer to this one but Comparable was already implemented in Shapes
+    private String name;
+
+    public Shape(){
+        this.name = "General Others.Shape";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public abstract double area();
+
+    @Override
+    public int compareTo(Shape o) {
+        /*
+        Umm This is Sort of confusing, for Activity 2. I didn't have to do anything since the Others.Shape class the prof gave already came with this.
+         */
+        if (this.area() < o.area())
+            return -1;
+        if (this.area() > o.area())
+            return 1;
+        return 0;
+
+    }
+
+    public double round(double num, int roundNum){ // I dislike printing really long doubles as it just shoves a bunch of mostly useless information in your face making it harder to read.
+        int j = 1;
+        for (int i = 0; i < roundNum; i++) j *= 10;
+        return ((double) Math.round(num * j)) / j;
+    }
+
+    @Override
+    public String toString(){  // Pointless but meh, Only useful if new shape is added without override of its own.
+        return "Others.Shape = " + name + ", Area = " + round(area(), 3);
+    }
+}
+sh-4.4$ cat Ob val.java
+public class Oval extends Shape {
+
+    private double[] radius;
+
+    public Oval(double radiusWidth, double radiusHeight){
+        this.setName("Others.Oval");
+        this.radius = new double[]{radiusWidth, radiusHeight};
+    }
+
+    public double[] getRadius() { return radius; }
+    public double getRadiusHeight() { return radius[0]; }
+    public double getRadiusWidth() { return radius[1]; }
+
+    @Override
+    public double area() { return Math.PI * this.radius[0] * this.radius[1]; }
+
+    public String toString(){
+        return "Others.Shape = " + getName() + ", Area = " + round(area(), 3) + ", Radius Width = " + round(radius[0], 3) + ", Radius Height = " + round(radius[1], 3);
+    }
+
+}
+sh-4.4$ cat Squrr  are./ java
+public class Square extends Shape {
+
+    private double side;
+
+    public Square(double side){
+        this.setName("Others.Square");
+        this.side = side;
+    }
+
+    public double getSide() {
+        return side;
+    }
+
+    @Override
+    public double area() {
+        return this.side * this.side;
+    }
+
+    @Override
+    public String toString(){
+        return "Others.Shape = " + getName() + ", Area = " + round(area(), 3) + ", Sides = " + round(side, 3);
+    }
+}
+sh-4.4$ cat Treiangle       iangle.java
+public class Triangle extends Shape {
+
+    private double base;
+    private double height;
+
+    public Triangle(double base, double height){
+        this.setName("Others.Triangle");
+        this.base = base;
+        this.height = height;
+    }
+
+    public double getBase() {
+        return base;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    @Override
+    public double area() {
+        return (this.base * this.height) / 2;
+    }
+
+    public String toString(){
+        return "Others.Shape = " + getName() + ", Area = " + round(area(), 3) + ", Base = " + round(base, 3) + ", Height = " + round(height, 3);
+    }
+}
+sh-4.4$ cat   javac Acticit   vityt 2Tester/ka   .java
+[6n[6n[m[?25hsh-4.4$ java Actiivty    vity23 Tester.jav    
+[6n[m[?25hThis is Number: -1
+This is Number: 0
+This is Number: 1
+sh-4.4$ cajava Activity2Testersh-4.4$ javac Activity2Tester.javash-4.4$ [9Pcat Triangle.java[2PSquare.java[2POval.java[1@Shape.java[1@Circle.java[9@Activity2Tester.java
+public class Activity2Tester {
+    public static void main(String[] args){
+        Triangle T = new Triangle(10, 10);
+        Triangle T2 = new Triangle(10, 10);
+        Oval O = new Oval(10, 10);
+        System.out.println("This is Number: " + T.compareTo(O));  // Umm I think either I am misunderstanding the question or the prof accidentally gave the answer to this one but Comparable was already implemented in Shapes
+        System.out.println("This is Number: " + T.compareTo(T2));
+        System.out.println("This is Number: " + O.compareTo(T));
+    }
+}
+sh-4.4$ exit
+exit
+
+Script done on 2021-07-11 12:58:30-04:00 [COMMAND_EXIT_CODE="0"]

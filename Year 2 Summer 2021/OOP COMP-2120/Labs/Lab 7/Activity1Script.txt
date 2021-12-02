@@ -1,0 +1,74 @@
+Script started on 2021-07-11 12:55:00-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat In  Oa  Pata  yable.java
+cat: Payable.java: No such file or directory
+sh-4.4$ c cd src
+sh-4.4$ cd srcat Payable.java
+public interface Payable {
+    double getPaymentAmount();
+
+}
+sh-4.4$ cat Acti    Employee.java
+public class Employee implements Payable{
+    private int workingHours;
+    private double hourlyRate;
+
+    public Employee(int workingHours, double hourlyRate){
+        this.workingHours = workingHours;
+        this.hourlyRate = hourlyRate;
+    }
+
+    public double getPaymentAmount(){
+        return workingHours * hourlyRate;
+    }
+
+
+    public void setWorkingHours(int hours){workingHours = hours;}
+    public void setHourlyRate(double rate){hourlyRate = rate;}
+
+    public int getWorkingHours() {return workingHours;}
+    public double getHourlyRate() {return hourlyRate;}
+}sh-4.4$ cat Invoice.java
+public class Invoice implements Payable{
+    private int numberOfProduct;
+    private double unitPrice;
+    private double tax;
+
+    public Invoice(){ this(0, 0); }
+    public Invoice(int numberOfProduct, double unitPrice){ this(numberOfProduct, unitPrice, 13); }
+    public Invoice(int numberOfProduct, double unitPrice, double taxPercent){
+        this.numberOfProduct = numberOfProduct;
+        this.unitPrice = unitPrice;
+        this.tax = taxPercent;
+    }
+
+    public double getPaymentAmount(){
+        return numberOfProduct * unitPrice * (1 + tax / 100);
+    }
+
+
+    public void setNumberOfProduct(int products){numberOfProduct = products;}
+    public void setUnitPrice(double price){unitPrice = price;}
+    public void setTax(double tax){this.tax = tax;}
+
+    public int getNumberOfProduct() {return numberOfProduct;}
+    public double getUnitPrice() {return unitPrice;}
+    public double getTax() {return tax;}
+}
+sh-4.4$ cat Actii vity1Tester.javv a
+public class Activity1Tester {
+
+    public static void main(String[] args){
+        Invoice I = new Invoice(100, 19.2, 13);
+        Employee E = new Employee(40, 150.47);
+        System.out.println("Invoices getPaymentAmount(" + I.getPaymentAmount() + ") Made From " + I.getNumberOfProduct() + " * " + I.getUnitPrice() + " * " + I.getTax() + "%");
+        System.out.println("Employees getPaymentAmount(" + E.getPaymentAmount() + ") Made From " + E.getWorkingHours() + " * " + E.getHourlyRate());
+    }
+}
+sh-4.4$ c g javac   c Activc  iv  vity1Tet ster.a java
+[6n[6n[m[?25hsh-4.4$ javac Activity1Tester.javaa     [1P
+[6n[m[?25hInvoices getPaymentAmount(2169.6) Made From 100 * 19.2 * 13.0%
+Employees getPaymentAmount(6018.8) Made From 40 * 150.47
+sh-4.4$ exit
+exit
+
+Script done on 2021-07-11 12:56:05-04:00 [COMMAND_EXIT_CODE="0"]

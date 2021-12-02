@@ -1,0 +1,8 @@
+You will write a method named isMatched like below. It will return true for valid strings, and false for invalid strings. You will use
+the stack named Stack2540Array that is implemented in the first step. The algorithm itself can be the same as in our lecture slides.
+Your program does not need to check the correctness of the arithmetic operators/operands. What you need to do is to check for balanced
+brackets.
+Test the performance of your Stack implementation on file reversing task. The code below is to reverse a text file using the stack. It has
+three lines missing, and you need to complete it. Then you submit it on our marking site here. You need to change the stack capacity
+according to input data size. On average each line has about 11 words. Our site prints out the total computer memory usage by your
+program when it runs on 5 data sets of different sizes.

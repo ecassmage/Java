@@ -1,0 +1,189 @@
+Script started on 2021-07-25 22:24:01-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+catsh-4.4$ cat InvoiceSystem.txt
+cat: InvoiceSystem.txt: No such file or directory
+sh-4.4$ cat InvoiceSystem.txt    sh-4.4$ [Kcd src
+sh: cd: src: No such file or directory
+sh-4.4$ cdx srcat InvoiceSystem.c java
+import java.util.ArrayList;
+
+public class InvoiceSystem {
+    public static void main(String[] args){
+        InvoiceSystem IS = new InvoiceSystem();
+        /*1*/ IS.addNewInvoice(new Invoice("Food", "Hello Money 123", "ShellFish", 100, 12.45, "Food To Eat"));// Not Out Of Stock
+        /*2*/ IS.addNewInvoice("Carpentry", "123 Carpentry Boulevard", "Wood", 0, 55.99, "Wood to Build Stuff With");  // Out Of Stock
+        /*3*/ IS.addNewInvoice("Computer Exploding", "99456 Crazy Avenue", "Computer Explosives", 1066, 14.10, "Definitely not normal explosives");  // Not Out Of Stock
+        System.out.println(IS); // Only 1 and 3 appear since 2 has no quantity remaining as asked.
+    }
+
+    private ArrayList<Invoice> invoices;
+
+    public InvoiceSystem(){ this(new Invoice[0]); }
+    public InvoiceSystem(Invoice voiceOfTheMasses){ this(new Invoice[]{voiceOfTheMasses}); }
+    public InvoiceSystem(ArrayList<Invoice> list){ this(list.toArray(new Invoice[list.size() + 1])); }
+    public InvoiceSystem(Invoice[] list){
+        this.invoices = new ArrayList<Invoice>();
+        for (Invoice voice: list) invoices.add(voice);
+    }
+
+    public void addNewInvoice(Invoice voice){
+        invoices.add(voice);
+    }
+    public void addNewInvoice(String InvoiceName, String Address, String Product, int Quantity, double Price, String Description){
+        addNewInvoice(new Invoice(InvoiceName, Address, Product, Quantity, Price, Description));
+    }
+
+    public String toString(){
+        String str = "";
+        for (Invoice voice: invoices) {
+            if (voice.inStock) {
+                str = str.concat(voice.toString());
+                str = str.concat("\n");
+            }
+        }
+        return str;
+    }
+}
+sh-4.4$ cat Invoice.jka  ava
+import java.util.ArrayList;
+
+public class Invoice {
+    // I  have no clue What I am supposed to do here. The Activity makes no sense to me what so ever.
+    private String InVoice;
+    private String Address;  // I got no clue what this address is meant to hold
+    private ArrayList<LineItem> lines;
+    private int leftSide;   // Just a formatting quality of life thingy.
+    private int Quantity;   // Holds Important Numbers
+    private double Price;   // Holds Important Numbers
+    public boolean inStock; // Holds Important Numbers
+
+    public static void main(String[] args){
+        Invoice I = new Invoice("This Is Censored", "324 Address I don't know the meaning of Lane");
+        I.newLineItem("Money", 57, 10.13, "This is Money, It Buys you Stuff");
+        System.out.println(I);
+    }
+    public Invoice(String InVoice, String Address, String Product, int Quantity, double Price, String Description){
+        this(InVoice, Address);
+        newLineItem(Product, Quantity, Price, Description);
+        this.Quantity = Quantity;
+        this.Price = Price;
+    }
+    public Invoice(String InVoice, String Address){
+        // I have no Clue what I am doing so I am just going to try to emulate an example invoice format I found online.
+        // So Literally All of this could be just the complete opposite of what I am actually being asked to do.
+        this.InVoice = InVoice;  // I dunno, the Name of the Invoice or Something
+        this.Address = Address;  // I dunno, the Name of the Invoice or Something
+        this.lines = new ArrayList<>();
+        this.leftSide = "Address".length() + 1;
+        this.Quantity = 0;
+        this.Price = 0;
+    }
+
+
+    public void InsertNewLineItem(int index, LineItem newItem){
+        if (index == -1) lines.add(lines.size(), newItem);
+        else lines.add(index, newItem);
+        if (newItem.getLeftSide().length() > leftSide) this.leftSide = newItem.getLeftSide().length();
+    }
+    public void InsertNewLineItem(int index, String Product, int Quantity, double Price, String Description){
+        InsertNewLineItem(index, new LineItem("Product", Product, Description));
+        InsertNewLineItem(index, new LineItem("Quantity", Quantity, ""));
+        InsertNewLineItem(index, new LineItem("Unit Price", "$" + Price, ""));
+        this.Quantity = Quantity;
+        this.inStock = isInStock();
+        this.Price = Price;
+        newLineItem("Total", "$" + amountDue());  // I don't know.
+    }
+
+    public double amountDue(){
+        return ((double) Math.round(Price * Quantity * 100)) / 100;  // I have no Idea what I am doing and am very likely checking the wrong thing, I am so Confused.
+    }
+
+    public boolean isInStock(){return Quantity > 0;}
+    public void newLineItem(String Product, int Quantity, double Price, String Description){ InsertNewLineItem(-1, Product, Quantity, Price, Description); }  // This is the Main One
+
+    // These are for extra LineItems that you can add.
+    public void newLineItem(LineItem newItem){ this.InsertNewLineItem(-1, newItem); }
+    public void newLineItem(String LeftSide, Object RightSideDescriptor, String Description){ InsertNewLineItem(-1, new LineItem(LeftSide, RightSideDescriptor, Description)); }
+    public void newLineItem(String LeftSide, Object RightSideDescriptor){ InsertNewLineItem(-1, new LineItem(LeftSide, RightSideDescriptor, "")); }
+
+    public String toString(){
+        // This is the Invoice Formatter. Formatting this specific Invoice.
+        if (Quantity == 0)  return "Out Of Stock";
+        String str = "";
+        str = str.concat("Invoice: ");
+        for (int i = 0; i < (leftSide - ((InVoice).length() / 2)) - "Invoice: ".length(); i++)   str = str.concat(" ");
+
+        str = str.concat("<" + InVoice + ">\nAddress");  // There is no point to the space, I just like it.
+
+        for (int i = 0; i < leftSide - "Address".length(); i++)         str = str.concat(" ");
+
+        str = str.concat(" |   " + Address + '\n');
+
+        for (LineItem line: lines){
+            str = str.concat("" + line.getLeftSide());
+            for (int i = 0; i < leftSide - line.getLeftSide().length(); i++){
+                str = str.concat(" ");
+            }
+            str = str.concat(" |   " + line.getRightSide() + " " + line.getDescription() + "\n");
+        }
+
+        return str;
+    }
+}
+sh-4.4$ cat LineItem.java
+public class LineItem {
+    private String leftSideDescriptor;
+    private String RightSideDescriptor;
+    private String Description;
+
+    public static void main(String[] args){
+        LineItem L = new LineItem("", "", "");
+    }
+
+    public LineItem(String LeftSide, Object RightSideDescriptor, String Description){
+        this.leftSideDescriptor = LeftSide;
+        setGoodInfo(RightSideDescriptor);
+        this.Description = Description.compareTo("") == 0 ? "" : "(" + Description + ")";
+    }
+    public String getLeftSide()     { return leftSideDescriptor; }
+    public String getRightSide()    { return RightSideDescriptor; }
+    public String getDescription()  { return Description; }
+
+    public String toString(){
+        return leftSideDescriptor + "\t" + RightSideDescriptor + " " + Description;
+    }
+
+    public void setDescription(String newDescription){
+        this.Description = newDescription;
+    }
+    public <T> void setGoodInfo(Object newVal){
+        if (newVal instanceof String)          this.RightSideDescriptor = newVal.toString();
+        else if (newVal instanceof Integer)    this.RightSideDescriptor = Integer.toString((int) newVal);
+        else if (newVal instanceof Double)     this.RightSideDescriptor = Double.toString((double) newVal);
+        else{
+            System.out.println("RightSideDescriptor Does not Accept " + newVal.getClass());
+            System.exit(0);
+        }
+    }
+}
+sh-4.4$ javac InvoiceSystem.java
+[6n[6n[m[?25hsh-4.4$ java Inc voiceSt ystem
+[6n[m[?25hInvoice: <Food>
+Address    |   Hello Money 123
+Product    |   ShellFish (Food To Eat)
+Quantity   |   100[1C
+Unit Price |   $12.45[1C
+Total      |   $1245.0[1C
+
+Invoice: <Computer Exploding>
+Address    |   99456 Crazy Avenue
+Product    |   Computer Explosives (Definitely not normal explosives)
+Quantity   |   1066[1C
+Unit Price |   $14.1[1C
+Total      |   $15030.6[1C
+
+
+sh-4.4$ exit
+exit
+
+Script done on 2021-07-25 22:24:54-04:00 [COMMAND_EXIT_CODE="0"]

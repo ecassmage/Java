@@ -1,0 +1,111 @@
+Script started on 2021-07-25 22:25:01-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat Pauir   irTester.java
+import java.util.ArrayList;
+
+public class PairTester {
+    public static void main(String[] args){
+        Pair<String, Integer> SI = new Pair<>("String Here", 100);
+        Pair<Boolean, Double> BD = new Pair<>(true, 123.0);
+        Pair<String, Double> SD = new Pair<>("String Here", 110.0);
+        Pair<String, Integer> SICopy = new Pair<>("This is New", 100);
+        System.out.println(SI);
+        SI.setObjectOne("This is New");
+        System.out.println(SI);
+        System.out.println(BD);
+        BD.setObjectTwo(1454.1);
+        System.out.println(BD);
+        System.out.println(SD.getObjectOne());
+        System.out.println(SD.getObjectTwo());
+        System.out.println(SI.equals(SICopy));
+        System.out.println(SI.equals(BD));
+        System.out.println(SI.equals(BD));
+        System.out.println(SICopy.toString());
+
+        ArrayList<String> Sesquipedalian = new ArrayList<>();
+        Sesquipedalian.add("Polysyllable");
+        Sesquipedalian.add("Polysyllabic");
+        Sesquipedalian.add("Long");
+        Sesquipedalian.add("Polysyllabic word");
+        Sesquipedalian.add("Sesquipedalia");
+        Sesquipedalian.sort(null);
+        ArrayList<String> Facetiously = new ArrayList<>();
+        Facetiously.add("Amusingly");
+        Facetiously.add("Ironically");
+        Facetiously.add("Ludicrously");
+        Facetiously.add("Playfully");
+        Facetiously.add("Jokingly");
+        Facetiously.add("Jocosely");
+        Facetiously.add("Merrily");
+        Facetiously.add("Ridiculously");
+        Facetiously.add("Absurdly");
+        Facetiously.add("Jovially");
+        Facetiously.add("Mirthfully");
+        Facetiously.add("Satirically");
+        Facetiously.sort(null);
+        ArrayList<Pair<String, ArrayList<String>>> P = new ArrayList<>();
+        P.add(new Pair<String, ArrayList<String>>("Sesquipedalian", Sesquipedalian));
+        P.add(new Pair<String, ArrayList<String>>("Facetiously", Facetiously));
+        System.out.println(P);
+    }
+}
+sh-4.4$ cat Pari  ir.java
+public class Pair<O/*ne*/, T/*wo*/> {
+    private O ObjectOne;
+    private T ObjectTwo;
+    public static void main(String[] args){
+        Pair<String, Integer> SI = new Pair<>("String Here", 100);
+        Pair<Boolean, Double> BD = new Pair<>(true, 123.0);
+        Pair<String, Double> SD = new Pair<>("String Here", 110.0);
+    }
+
+    public Pair(O ObjectOne, T ObjectTwo){
+        setObjectOne(ObjectOne);
+        setObjectTwo(ObjectTwo);
+    }
+
+    public O getObjectOne(){
+        return ObjectOne;
+    }
+    public T getObjectTwo(){
+        return ObjectTwo;
+    }
+    public void setObjectOne(O ObjectOne){
+        this.ObjectOne = ObjectOne;
+    }
+    public void setObjectTwo(T ObjectTwo){
+        this.ObjectTwo = ObjectTwo;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj instanceof Pair && ((Pair<?, ?>) obj).getObjectOne().getClass() == this.getObjectOne().getClass() && ((Pair<?, ?>) obj).getObjectTwo().getClass() == this.getObjectTwo().getClass()){
+            return ObjectOne == ((Pair<?, ?>) obj).getObjectOne() && ObjectTwo == ((Pair<?, ?>) obj).getObjectTwo();
+        }
+        return false;
+        // I can't think of a way to determine if a different Object to this Pair could be measured since I don't know if it even has any instance variables
+    }
+
+    public String toString(){
+        return "<" + ObjectOne.toString() + ", " + ObjectTwo.toString() + ">";
+    }
+}
+sh-4.4$ c javac PairTester.jva
+[6n[6n[m[?25herror: Class names, 'PairTester.jva', are only accepted if annotation processing is explicitly requested
+1 error
+sh-4.4$ javac PairTester.jvaj[1@a
+[6n[m[?25hsh-4.4$ java PairTester
+[6n[m[?25h<String Here, 100>
+<This is New, 100>
+<true, 123.0>
+<true, 1454.1>
+String Here
+110.0
+true
+false
+false
+<This is New, 100>
+[<Sesquipedalian, [Long, Polysyllabic, Polysyllabic word, Polysyllable, Sesquipedalia]>, <Facetiously, [Absurdly, Amusingly, Ironically, Jocosely, Jokingly, Jovially, Ludicrously, Merrily, Mirthfully, Playfully, Ridiculously, Satirically]>]
+sh-4.4$ exit
+exit
+
+Script done on 2021-07-25 22:25:36-04:00 [COMMAND_EXIT_CODE="0"]

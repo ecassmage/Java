@@ -1,7 +1,9 @@
 public class ComboLockTester {
 
     public static void main(String[] args){
+        boolean isOpen;
         ComboLock C = new ComboLock(5, 10, 3);
+        if (C.open()) System.exit(0);  // This will exit if this does not work  // This was added
         C.turnRight(5);
         C.printTick();
         C.open();
@@ -13,7 +15,7 @@ public class ComboLockTester {
         C.open();
         C.turnRight(33);
         C.printTick();
-        C.open();
+        if (!C.open()) System.exit(0);  // This will exit if this does not work // This was added
         C.tryToUnlockLockLoop();
     }
 }

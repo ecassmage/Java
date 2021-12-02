@@ -1,0 +1,81 @@
+Script started on 2021-07-11 12:42:02-04:00 [TERM="xterm-256color" TTY="/dev/cons0" COLUMNS="315" LINES="19"]
+sh-4.4$ cat Animal.java
+cat: Animal.java: No such file or directory
+sh-4.4$ cd src
+sh-4.4$ cd srcat Animal.java
+public abstract class Animal {
+    public String howToEat(){
+        return "";
+    }
+}
+sh-4.4$ cat Apple.java
+public class Apple extends Fruit implements Edible{
+    public String howToEat(){ return "Apple: Just Eat It, Just Eat It."; }
+}
+sh-4.4$ cat Banam na
+cat: Banana: No such file or directory
+sh-4.4$ cat Banana.java
+public class Banana extends Fruit implements Edible{
+    public String howToEat(){ return "Banana: Just Eat It, Just Eat It, Just Eat It."; }
+}
+sh-4.4$ cat Orange,.  .java
+public class Orange extends Fruit implements Edible{
+    public String howToEat(){ return "Orange: Just Eat It"; }
+}
+sh-4.4$ va  cat Chicken.java
+public class Chicken extends Animal implements Edible {
+    public String howToEat(){ return "Chicken: Don't eat raw or salmonella, So Fry it and enjoy eating with ketchup, fries and Coke…!"; }
+}
+sh-4.4$ cat Edible.java
+public interface Edible {
+    ///This Scripting Stuff is going to be a pain for this.
+    String howToEat();
+}
+sh-4.4$ cat Fish.java
+public class Fish extends Animal implements Edible {
+    public String howToEat(){ return "Fish: Eat it raw or cook it up?"; }
+}
+sh-4.4$ cat Fruit, .java
+public class Fruit {
+    public String howToEat(){
+        return "";
+    }
+}
+sh-4.4$ cat Meat.java
+public class Meat extends Animal implements Edible {
+    public String howToEat(){ return "Meat: Cook it Up then Eat it."; }
+}
+sh-4.4$ cat Orange.java
+public class Orange extends Fruit implements Edible{
+    public String howToEat(){ return "Orange: Just Eat It"; }
+}
+sh-4.4$ javac Acic ti   t         cat Acx tivity7 3Tester.java
+public class Activity3Tester {
+    public static void main(String[] args){
+        Fruit O = new Orange();
+        Fruit A = new Apple();
+        Fruit B = new Banana();
+        Animal C = new Chicken();
+        Animal M = new Meat();
+        Animal F = new Fish();
+
+        System.out.println(O.howToEat());
+        System.out.println(A.howToEat());
+        System.out.println(B.howToEat());
+        System.out.println(C.howToEat());
+        System.out.println(M.howToEat());
+        System.out.println(F.howToEat());
+    }
+}
+sh-4.4$ javac Activity4 3Tester.java
+[6n[6n[m[?25hsh-4.4$ java Activity3Tester
+[6n[m[?25hOrange: Just Eat It
+Apple: Just Eat It, Just Eat It.
+Banana: Just Eat It, Just Eat It, Just Eat It.
+Chicken: Don't eat raw or salmonella, So Fry it and enjoy eating with ketchup, fries and Cokeâ?¦!
+Meat: Cook it Up then Eat it.
+Fish: Eat it raw or cook it up?
+sh-4.4$ esi  xcit   it
+exit
+
+Script done on 2021-07-11 12:43:42-04:00 [COMMAND_EXIT_CODE="0"]

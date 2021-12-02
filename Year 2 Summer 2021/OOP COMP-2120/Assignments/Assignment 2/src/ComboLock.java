@@ -1,43 +1,26 @@
-import javax.swing.*;
-import java.awt.*;
-import java.util.Arrays;
 import java.util.Scanner;
-
-
 
 public class ComboLock {
     //Stuff Up Above
-    private boolean dev = false;
-    private boolean animate = true;
-    private int[] Code;
-    private boolean[] Clicks;
-    private int TurnsToReset;
-    private char Direction;
-    private int TickCircle;
-    private boolean workingLock;
-    private String[] ComboLockFace;
-    private Canvas canvas = new Canvas(this);
+    private int[] Code;  // This Holds The three combination numbers
+    private boolean[] Clicks; // This holds fivd booleans, for checking the combination. I set it up like my combination which needs to turn right then turn left fully then turn left to second number then turn right to third. each of these needs a true false and I for some reason added a fifth not quite sure
+    private int TurnsToReset;  // This keeps track of how many turns have been made to reset, my combination lock recommends three so that what I went with.
+    private char Direction; // This keeps track of current direction. so left and right.
+    private int TickCircle; // This gives the current number on the circle
+    private boolean workingLock;  // This is to make sure the user does not input a bad lock. so if the user tries 55 0 5 it will not work and this will be false.
     //Stuff Up Above
     //Public
     public static void main(String[] args){
         ComboLock C = new ComboLock(5, 10, 3);
-        C.update();
         C.tryToUnlockLockLoop();
-        //C.buildComboLockFace();
-        //C.turnRight(5);
-        //C.printTick();
-        //C.turnLeft(40);
-        //C.printTick();
-        //C.turnLeft(35);
-        //C.printTick();
-        //C.turnRight(33);
-        //C.printTick();
     }
     public void tryToUnlockLockLoop(){
+        reset();
         Scanner scn = new Scanner(System.in);
-        help();
+        //help();
+        System.out.println("This can be ignored I wasn't sure if this itself was necessary or not, but it kept asking for user in the assignment so I am leaving it in. Its code is shoved to the bottom of the Class.");
         while (true){
-            update();
+            System.out.println("Please Enter SomeThing Either: (open, reset l, r, quit, exit, enter new combination, check locks, help, showface)"); // This is New. Just Though I would say that.
             String grr = scn.nextLine();
             grr = grr.toLowerCase();
             inputSwitch(grr);
@@ -53,36 +36,17 @@ public class ComboLock {
     }
     public void reset() {
         TickCircle = 0;
-        canvas.moveArm(0);
         TurnsToReset = 3;
         Clicks = new boolean[]{false, false, false, false, false};
         Direction = 'R';
-    }
-    public void lockLock() {
-        Clicks = new boolean[]{false, false, false, false, false};
-        Direction = 'R';
-        TurnsToReset = 0;
     }
     public void turnLeft(int ticks) {
         if (!workingLock) badLockMsg();
         if (Direction != 'L' && ticks != 0 || TurnsToReset < 3) lockLock();
         int tempOld = TickCircle;
-
-        if (animate){
-            for (int i = 0; i < ticks; i++){
-                TickCircle--;
-                if (TickCircle == -1)
-                    TickCircle = 39;
-                update();
-            }
-        }
-        else {
-            TickCircle -= ticks;
-            while (TickCircle < 0) TickCircle += 40;
-        }
+        TickCircle -= ticks;
+        while (TickCircle < 0) TickCircle += 40;
         if (Clicks[0]){
-            boolean bitch = checkIfPassed(tempOld, Code[0], ticks, TickCircle, 'L');
-            boolean bitch2 = checkIfPassed(tempOld, Code[1], ticks, TickCircle, 'L');
             if (!Clicks[1]) {
                 if (checkIfPassed(tempOld, Code[0], ticks, TickCircle, 'L')) {
                     Clicks[1] = true;
@@ -108,18 +72,8 @@ public class ComboLock {
         if (Direction != 'R' && ticks != 0) lockLock();
         if (TurnsToReset < 3 && TickCircle + ticks >= 40) TurnsToReset += ((TickCircle + ticks) / 40);
         int tempOld = TickCircle;
-        if (animate){
-            for (int i = 0; i < ticks; i++){
-                TickCircle++;
-                if (TickCircle == 40)
-                    TickCircle = 0;
-                update();
-            }
-        }
-        else {
-            TickCircle += ticks;
-            while (TickCircle > 39) TickCircle -= 40;
-        }
+        TickCircle += ticks;
+        while (TickCircle > 39) TickCircle -= 40;
         if (!Clicks[0]){
             if (checkIfPassed(tempOld, Code[0], ticks, TickCircle, 'R')){
                 if (TickCircle == Code[0]){
@@ -136,30 +90,7 @@ public class ComboLock {
             }
         }
     }
-    public void printTick(){
-        System.out.println("Current Tick: " + TickCircle);
-        update();
-    }
-    public void fixLock(int secret1, int secret2, int secret3){
-        this.Code = new int[]{secret1, secret2, secret3};
-        checkIfWorkingLock();
-    }
-    public int getTickPosition(){return TickCircle;}
-    public int[] getCode(){
-        System.out.println("Don't Cheat That is Disgusting, You Should be Ashamed");
-        return new int[]{-1, -1, -1};
-    }
-    public boolean[] getClicks(){
-        System.out.println("Don't Cheat That is Disgusting, You Should be Ashamed");
-        return new boolean[]{false, false, false, false, false};
-    }
-    public void update(){
-        canvas.update();
-    }
     public boolean open(){return open(true);}
-    //Public
-
-    //Private
     private boolean open(boolean showMessage) {
         if (!workingLock) badLockMsg();
         if (Clicks[4] || (Clicks[0] && Clicks[1] && Clicks[2] && Clicks[3])){
@@ -172,15 +103,44 @@ public class ComboLock {
         if (showMessage) System.out.println("**SHAKE SHAKE SHAKE** Lock Still Locked");
         return false;
     }
-
-    private static void sleep(int millis){
-        try{ Thread.sleep(millis); }
-        catch(Exception InterruptedException){ System.exit(0); }
+    // This is a reset that doesn't allow continuation until you go around clockwise 3 times.
+    public void lockLock() {
+        Clicks = new boolean[]{false, false, false, false, false};
+        Direction = 'R';
+        TurnsToReset = 0;
     }
+    // Prints the Current Position of the Lock.
+    public void printTick(){ System.out.println("Current Tick: " + TickCircle); }
+    // This is to fix the Lock should user have inputted a bad code to begin with.
+    public void fixLock(int secret1, int secret2, int secret3){
+        this.Code = new int[]{secret1, secret2, secret3};
+        checkIfWorkingLock();
+    }
+    //  Gets the Current Position of the Lock
+    public int getTickPosition(){return TickCircle;}
+    //Public
 
+    //Private
+    private void checkIfWorkingLock(){
+        for (int num: Code){
+            if (!(0 <= num && num <= 39)) {
+                System.out.println("This Combination Lock does not Work");
+                workingLock = false;
+            }
+            else workingLock = true;
+        }
+    }
+    private boolean checkIfPassed(int start, int numCheck, int change, int end, char dir){
+        if (change >= 40) return true;
+
+        if (dir == 'L') return ((start < end && ((0 <= numCheck && numCheck <= start) || end <= numCheck && numCheck < 40)) || (end <= numCheck && numCheck <= start));
+        else if (dir == 'R') return ((end < start) && ((0 <= numCheck && numCheck <= end || start <= numCheck && numCheck <40)) || (start <= numCheck && numCheck <= end));
+
+        return false;
+    }
+    // This manages inputs by the user you can ignore this if you want.
     private void inputSwitch(String str){
         switch(str){
-
             case "open":
                 open();
                 break;
@@ -214,14 +174,8 @@ public class ComboLock {
                 help();
                 break;
 
-            case "dev true":
-                dev = true;
-                canvas.dev = true;
-                break;
-
-            case "dev false": case "dev":
-                dev = false;
-                canvas.dev = false;
+            case "showface":
+                System.out.println("The Combo Lock is currently pointing to: " + getTickPosition());
                 break;
 
             default:
@@ -233,6 +187,32 @@ public class ComboLock {
         }
     }
 
+    private char getChar(String str){
+        for (int i = 0; i < str.length(); i++){
+            if (str.charAt(i) == 'L' || str.charAt(i) == 'l'){
+                return 'L';
+            }
+            else if (str.charAt(i) == 'R' || str.charAt(i) == 'r'){
+                return 'R';
+            }
+        }
+        return ' ';
+    }
+
+    private int getNumber(String str){
+        boolean foundNumber = false;
+        int num = 0;
+        for (int i = 0; i < str.length(); i++){
+            if (48 <= str.charAt(i) && str.charAt(i) < 58){
+                num = (num * 10) + (str.charAt(i) - 48);
+                foundNumber = true;
+            }
+            else if (foundNumber) return num;
+        }
+        return num;
+    }
+
+    // This is Just for explaining stuff
     private void help(){
         System.out.println("Hello and welcome to the grand game of opening a gym lock!!!\n");
 
@@ -265,8 +245,6 @@ public class ComboLock {
                 "\n\tFirst code is   <QUIT>   " +
                 "\n\tSecond code is   <EXIT>   ");
         System.out.println("If you wish to review this help page you can enter:   <HELP>   ");
-        if (dev) System.out.println("To Disable Dev Mode enter   <DEV>   " +
-                "\n\nYou Are also In Breach of Some law or another by enabling this setting. Shame on you. tsk tsk tsk >:[");
         System.out.println();
         System.out.println();
     }
@@ -285,157 +263,8 @@ public class ComboLock {
         TurnsToReset = 0;
     }
 
-    private int getNumber(String str){
-        boolean foundNumber = false;
-        int num = 0;
-        for (int i = 0; i < str.length(); i++){
-            if (48 <= str.charAt(i) && str.charAt(i) < 58){
-                num = (num * 10) + (str.charAt(i) - 48);
-                foundNumber = true;
-            }
-            else if (foundNumber) return num;
-        }
-        return num;
-    }
-    private char getChar(String str){
-        boolean foundNumber = false;
-        int num = 0;
-        for (int i = 0; i < str.length(); i++){
-            if (str.charAt(i) == 'L' || str.charAt(i) == 'l'){
-                return 'L';
-            }
-            else if (str.charAt(i) == 'R' || str.charAt(i) == 'r'){
-                return 'R';
-            }
-        }
-        return ' ';
-    }
-
-    private boolean checkIfPassed(int start, int numCheck, int change, int end, char dir){
-        if (change >= 40) return true;
-
-        if (dir == 'L') return ((start < end && ((0 <= numCheck && numCheck <= start) || end <= numCheck && numCheck < 40)) || (end <= numCheck && numCheck <= start));
-        else if (dir == 'R') return ((end < start) && ((0 <= numCheck && numCheck <= end || start <= numCheck && numCheck <40)) || (start <= numCheck && numCheck <= end));
-
-        return false;
-    }
-
     private void badLockMsg(){
         System.out.println("This lock is not working (It does not have a combination entered into it.");
     }
-    private void checkIfWorkingLock(){
-        for (int num: Code){
-            if (!(0 <= num && num <= 39)) {
-                System.out.println("This Combination Lock does not Work");
-                workingLock = false;
-            }
-            else workingLock = true;
-        }
-    }
-    // arg So much more difficult then python to get working.
-    // I know everything below this looks nasty but in my defence I am used to pythons tkinter and pygame So I am not used to any of this.
-    private static class Canvas extends java.awt.Canvas {
-        private boolean dev;
-        private int[] coordinates;
-        private int[] circleDimensions = {0, 0, 300, 300};
-        private final int padding = 50;
-        private final int[] importantPoint;
-        private final ComboLock CL;
-        private Panel panel;
-        private int[] skip = {0, 10};
 
-        public Canvas(ComboLock CL){
-            this.dev = CL.dev;
-            this.CL = CL;
-
-            JFrame frame = new JFrame();
-
-            frame.setLayout(new BorderLayout());
-            if (this.dev) {
-                frame.setSize((17 + circleDimensions[2] + padding) * 2, 40 + circleDimensions[3] + padding);  // 17 and 40 are something JFrame likes adding offsetting everything idkY.
-                frame.setTitle("Combination Lock:  Dev Mode Enabled");
-            }
-            else {
-                frame.setSize(17 + circleDimensions[2] + padding, 40 + circleDimensions[3] + padding);  // 17 and 40 are something JFrame likes adding offsetting everything idkY.
-                frame.setTitle("Combination Lock");
-            }
-            frame.add("Center", this);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-
-            this.panel = new Panel(this);
-            frame.setContentPane(panel);
-
-            importantPoint = new int[]{(circleDimensions[2] + circleDimensions[0]) / 2 + padding/2, (circleDimensions[2] + circleDimensions[0]) / 2 + padding/2};
-            circleDimensions = new int[] {circleDimensions[0] + padding / 2, circleDimensions[1] + padding / 2, 300, 300};
-            this.coordinates = new int[]{importantPoint[0], importantPoint[1], 200, 50};
-
-
-            moveArm(0);
-        }
-
-        public void update(){
-            moveArm(CL.TickCircle);
-            if (skip[0] == skip[1]) {
-                //moveArm(CL.TickCircle);
-                panel.update(panel.getGraphics());
-                sleep(1000 / 60);
-            }
-            else skip[0]++;
-        }
-
-        public void moveArm(int num){
-            coordinates[2] = importantPoint[0] + (int) (Math.cos(Math.toRadians(90 - 9*num)) * (((double) circleDimensions[3] / 2)));;
-            coordinates[3] = (circleDimensions[2]+padding) - (importantPoint[1] + (int) (Math.sin(Math.toRadians(90 - 9*num)) * (((double) circleDimensions[3] / 2))));
-        }
-    }
-
-    private static class Panel extends JPanel{
-        private Canvas canvas;
-
-        public void paintComponent(Graphics g){
-                super.paintComponent(g);
-                CircleObject(g);
-                CircleObject(g);
-                CircleObject(g);
-                LineObject(g);
-                if (canvas.dev) devObj(g);
-                sleep(10);
-
-        }
-
-        private void CircleObject(Graphics g){
-            g.drawOval(canvas.circleDimensions[0], canvas.circleDimensions[1], canvas.circleDimensions[2], canvas.circleDimensions[2]);
-            g.setColor(Color.black);
-            g.fillOval(canvas.importantPoint[0]-5, canvas.importantPoint[1]-5, 10, 10);
-            g.drawString("0", 172, 22);
-            g.drawString("5", 284, 69);
-            g.drawString("10", 328, 180);
-            g.drawString("15", 282, 293);
-            g.drawString("20", 168, 340);
-            g.drawString("25", 55, 293);
-            g.drawString("30", 10, 175);
-            g.drawString("35", 55, 67);
-        }
-
-        private void devObj(Graphics g){
-            g.setFont(new Font("TimesRoman", Font.BOLD, 15));
-            g.drawString("Developer Mode is ENABLED, if you are not a", 375, 15);
-            g.drawString("Developer please DISABLE this feature", 375, 30);
-            g.drawString("Does Lock have a Valid Combination: " + canvas.CL.workingLock, 375, 75);
-            g.drawString("Combination: [" + canvas.CL.Code[0] + ", " + canvas.CL.Code[1] + ", " + canvas.CL.Code[2] + "]", 375, 90);
-            g.drawString("TickCircle: " + canvas.CL.TickCircle, 375, 105);
-            g.drawString("Reset Turns Made: " + canvas.CL.TurnsToReset, 375, 120);
-            g.drawString("Clicks: " + Arrays.toString(canvas.CL.Clicks), 375, 135);
-            g.drawString("Is Unlocked?: " + canvas.CL.open(false), 375, 150);
-        }
-
-        private void LineObject(Graphics g){ g.drawLine(canvas.coordinates[0], canvas.coordinates[1], canvas.coordinates[2], canvas.coordinates[3]); }
-
-
-        public Panel(Canvas C){
-            this.canvas = C;
-        }
-    }
 }
