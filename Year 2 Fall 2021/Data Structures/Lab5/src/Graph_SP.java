@@ -1,10 +1,9 @@
-import java.io.*;
 import java.util.*;
 
 public class Graph_SP {
     public double[] distTo;
     public Edge[] edgeTo;
-    public Map distTable = new HashMap<Integer, Double>();
+    public Map distTable = new HashMap<String, Integer>();
 
     public Graph_SP(Graph G, int s) {
         distTo = new double[G.V];

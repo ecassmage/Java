@@ -9,8 +9,7 @@ public class main {
         long startTime = System.currentTimeMillis();
         Graph_SP sp = new Graph_SP(G, s);
         System.out.println(System.currentTimeMillis()-startTime);
-
-        for (int t = 0; t < 25; t++) { // print the first a few shortest paths
+        for (int t = 0;  (sp.distTo.length < 25 ? sp.distTo.length: 25) > t; t++) { // print the first a few shortest paths
             if (sp.distTo[t] < Double.POSITIVE_INFINITY) {
                 System.out.printf("%d => %d (%.2f)  ", s, t, sp.distTo[t]);
                 String path = t + "";
